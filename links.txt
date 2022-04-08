@@ -1,0 +1,5 @@
+# this link is for organizing a django-react project's files in a standard method.
+https://studygyaan.com/django/django-react-setup-best-project-structure
+
+# this link is for how to install node js on manjaro.
+https://www.codegrepper.com/code-examples/javascript/install+node+js+manjaro+linux
