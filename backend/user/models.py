@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
+from room.models import Room
 
 # Create your models here.
 
@@ -39,3 +40,16 @@ class CustomUser(AbstractUser):
     def files_volume(self):
         pass
 
+
+class CustomUser_Room(models.Model):
+    OPERATOR = 'OPT'
+    PRESENTER = 'PRS'
+    GUEST = 'GUT'
+    USER_ROLE_CHOICES = [
+        (OPERATOR, 'اپراتور'),
+        (PRESENTER, 'ارائه دهنده'),
+        (GUEST, 'مهمان')
+    ]
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    role = models.CharField(choices=USER_ROLE_CHOICES, max_length=3, default=GUEST)
