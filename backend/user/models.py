@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 # from room.models import Room
 
+
 # Create your models here.
 
 
@@ -15,8 +16,8 @@ class CustomUser(AbstractUser):
     def shown_name(self):
         return self.first_name + " " + self.last_name
 
-    def services_number(self):
-        pass
+    def number_of_services(self):
+        return self.serviceUser.all().count()
 
     def rooms_number(self):
         pass
