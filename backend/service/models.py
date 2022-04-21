@@ -11,10 +11,10 @@ class Plan(models.Model):
     SIXMONTH = 'SMO'
     ONEYEAR = 'OYR'
     SERVICE_PERIOD_CHOICES = [
-        (ONEMONTH, 'یک ماهه'),
-        (THREEMONTH, 'سه ماهه'),
-        (SIXMONTH, 'شش ماهه'),
-        (ONEYEAR, 'یک ساله')
+        (ONEMONTH, 1),
+        (THREEMONTH, 3),
+        (SIXMONTH, 6),
+        (ONEYEAR, 12)
     ]
     users_number_limit = models.BigIntegerField()
     organizing_time_limit = models.BigIntegerField()
@@ -25,7 +25,7 @@ class Plan(models.Model):
     def __str__(self):
         for i in Plan.SERVICE_PERIOD_CHOICES:
             if i[0] == self.period:
-                return i[1]
+                return f"{i[1]} ماهه"
     
 
 class Service(models.Model):
@@ -35,5 +35,6 @@ class Service(models.Model):
     start_date = models.DateTimeField(auto_now_add=True, null=True)
 
     def end_date(self):
-        return self.start_date
+        self.start_date.mot
+        return self.start_date.month
 

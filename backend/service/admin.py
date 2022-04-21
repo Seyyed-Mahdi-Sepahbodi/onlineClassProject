@@ -4,7 +4,7 @@ from .models import Service, Plan
 # Register your models here.
 
 class ServiceAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('end_date',)
 admin.site.register(Service, ServiceAdmin)
 
 
