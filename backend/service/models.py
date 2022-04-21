@@ -24,4 +24,5 @@ class Plan(models.Model):
     
 
 class Service(models.Model):
-    pass
+    user = models.ForeignKey(organizer_user, on_delete=models.CASCADE)
+    plan = models.ForeignKey(Plan, on_delete=models.CASCADE)

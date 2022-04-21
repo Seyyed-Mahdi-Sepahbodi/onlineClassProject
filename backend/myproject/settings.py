@@ -44,7 +44,8 @@ INSTALLED_APPS = [
 
     # my apps
     'frontend',
-    'user.apps.UserConfig'
+    'user.apps.UserConfig',
+    'service.apps.ServiceConfig',
 ]
 
 MIDDLEWARE = [
