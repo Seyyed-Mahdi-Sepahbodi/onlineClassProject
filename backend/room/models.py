@@ -1,7 +1,10 @@
 from django.db import models
 from service.models import Service
+from django.contrib.auth import get_user_model
 
 # Create your models here.
+
+user = get_user_model()
 
 class Room(models.Model):
     title = models.CharField(max_length=50)
@@ -30,8 +33,8 @@ class File(models.Model):
         (DOCUMENT, 'سند')
     ]
     title = models.CharField(max_length=100)
-    category = models.CharField(choices=FILE_CATEGORY_CHOICES, max_length='3', default=DOCUMENT)
-    uploader = models.ForeignKey(to, on_delete=models.DO_NOTHING)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    category = models.CharField(choices=FILE_CATEGORY_CHOICES, max_length=3, default=DOCUMENT)
+    uploader = models.ForeignKey(user, on_delete=models.DO_NOTHING)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='fileRoom')
     upload_date = models.DateTimeField(auto_now_add=True)
     

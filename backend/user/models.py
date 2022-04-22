@@ -36,8 +36,12 @@ class CustomUser(AbstractUser):
         return result
     number_of_services.short_description = 'تعداد شرکت کنندگان'
 
-    def files_number(self):
-        pass
+    def number_of_files(self):
+        result = 0
+        for i in self.serviceUser.all():
+            for j in i.roomService.all():
+                result += j.fileRoom.all().count()
+        return result
     number_of_services.short_description = 'تعداد فایل ها'
 
     def files_volume(self):
