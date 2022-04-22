@@ -20,6 +20,10 @@ class Room(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name = 'اتاق'
+        verbose_name_plural = 'اتاق‌ها'
+
 
 class File(models.Model):
     VIDEO = 'VID'
@@ -38,3 +42,6 @@ class File(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='fileRoom')
     upload_date = models.DateTimeField(auto_now_add=True)
     
+    class Meta:
+        verbose_name = 'فایل'
+        verbose_name_plural = 'فایل‌ها'

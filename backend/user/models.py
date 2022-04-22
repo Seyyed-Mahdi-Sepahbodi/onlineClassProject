@@ -61,3 +61,7 @@ class CustomUser_Room(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='userRoom')
     role = models.CharField(choices=USER_ROLE_CHOICES, max_length=3, default=GUEST)
+
+    class Meta:
+        verbose_name = 'کاربر-اتاق'
+        verbose_name_plural = 'کاربران-اتاق‌ها'

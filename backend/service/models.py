@@ -26,6 +26,10 @@ class Plan(models.Model):
         for i in Plan.SERVICE_PERIOD_CHOICES:
             if i[0] == self.period:
                 return f"{i[1]} ماهه"
+
+    class Meta:
+        verbose_name = 'طرح'
+        verbose_name_plural = 'طرح ها'
     
 
 class Service(models.Model):
@@ -37,4 +41,8 @@ class Service(models.Model):
     def end_date(self):
         # self.start_date.month
         return self.start_date.month
+
+    class Meta:
+        verbose_name = 'سرویس'
+        verbose_name_plural = 'سرویس ها'
 
