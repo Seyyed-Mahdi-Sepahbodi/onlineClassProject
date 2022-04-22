@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser
+from .models import CustomUser, CustomUser_Room
 
 # Register your models here.
 
@@ -30,3 +30,8 @@ UserAdmin.fieldsets[2][1]['fields'] = (
 UserAdmin.list_display = ('username', 'get_full_name', 'email', 'is_superuser', 'is_staff', 'is_active')
 UserAdmin.list_filter += ("organizer",)
 admin.site.register(CustomUser, UserAdmin)
+
+
+class CustomUser_RoomAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(CustomUser_Room, CustomUser_RoomAdmin)

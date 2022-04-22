@@ -18,20 +18,20 @@ class Room(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-# class File(models.Model):
-#     VIDEO = 'VID'
-#     PICTURE = 'PIC'
-#     AUDIO = 'AUD'
-#     DOCUMENT = 'DOC'
-#     FILE_CATEGORY_CHOICES = [
-#         (VIDEO, 'ویدئو'),
-#         (PICTURE, 'تصویر'),
-#         (AUDIO, 'صوت'),
-#         (DOCUMENT, 'سند')
-#     ]
-#     title = models.CharField(max_length=100)
-#     category = models.CharField(choices=FILE_CATEGORY_CHOICES, max_length='3', default=DOCUMENT)
-#     uploader = models.ForeignKey(to, on_delete=models.DO_NOTHING)
-#     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-#     upload_date = models.DateTimeField(auto_now_add=True)
+class File(models.Model):
+    VIDEO = 'VID'
+    PICTURE = 'PIC'
+    AUDIO = 'AUD'
+    DOCUMENT = 'DOC'
+    FILE_CATEGORY_CHOICES = [
+        (VIDEO, 'ویدئو'),
+        (PICTURE, 'تصویر'),
+        (AUDIO, 'صوت'),
+        (DOCUMENT, 'سند')
+    ]
+    title = models.CharField(max_length=100)
+    category = models.CharField(choices=FILE_CATEGORY_CHOICES, max_length='3', default=DOCUMENT)
+    uploader = models.ForeignKey(to, on_delete=models.DO_NOTHING)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    upload_date = models.DateTimeField(auto_now_add=True)
     
