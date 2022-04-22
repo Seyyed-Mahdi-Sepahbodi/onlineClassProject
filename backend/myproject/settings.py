@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'frontend',
     'user.apps.UserConfig',
     'service.apps.ServiceConfig',
+    'room.apps.RoomConfig',
 ]
 
 MIDDLEWARE = [

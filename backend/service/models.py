@@ -35,6 +35,6 @@ class Service(models.Model):
     start_date = models.DateTimeField(auto_now_add=True, null=True)
 
     def end_date(self):
-        self.start_date.mot
+        # self.start_date.month
         return self.start_date.month
 

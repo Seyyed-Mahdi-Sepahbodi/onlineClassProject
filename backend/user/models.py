@@ -19,8 +19,11 @@ class CustomUser(AbstractUser):
     def number_of_services(self):
         return self.serviceUser.all().count()
 
-    def rooms_number(self):
-        pass
+    def number_of_rooms(self):
+        result = 0
+        for i in self.serviceUser.all():
+            result += i.roomService.all().count()
+        return result
 
     def users_number(self):
         pass
