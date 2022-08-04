@@ -21,4 +21,4 @@ urlpatterns = [
     path('', include('panel.urls')),
     path('accounts/', include('accounts.urls')),
     # path('', include('frontend.urls')),
-
+]

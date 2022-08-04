@@ -49,16 +49,6 @@ INSTALLED_APPS = [
     'panel.apps.PanelConfig',
     'accounts.apps.AccountsConfig',
     'frontend.apps.FrontendConfig',
-
-
-<<<<<<< HEAD
-=======
-    # my apps
-    'frontend',
-    'user.apps.UserConfig',
-    'service.apps.ServiceConfig',
-    'room.apps.RoomConfig',
->>>>>>> 00f6527b0710117c960aa017c7db693917946a64
 ]
 
 MIDDLEWARE = [
