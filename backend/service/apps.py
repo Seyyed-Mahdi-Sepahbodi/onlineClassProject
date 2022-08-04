@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class RoomConfig(AppConfig):
+class ServiceConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'room'
-    verbose_name = 'اتاق'
+    name = 'service'
+    verbose_name = 'سرویس'

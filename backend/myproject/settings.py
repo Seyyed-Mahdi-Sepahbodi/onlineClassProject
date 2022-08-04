@@ -51,6 +51,14 @@ INSTALLED_APPS = [
     'frontend.apps.FrontendConfig',
 
 
+<<<<<<< HEAD
+=======
+    # my apps
+    'frontend',
+    'user.apps.UserConfig',
+    'service.apps.ServiceConfig',
+    'room.apps.RoomConfig',
+>>>>>>> 00f6527b0710117c960aa017c7db693917946a64
 ]
 
 MIDDLEWARE = [
@@ -117,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa-ir'
 
 TIME_ZONE = 'UTC'
 
@@ -145,4 +153,5 @@ AUTH_USER_MODEL = 'accounts.CustomUsers'
 
 LOGIN_URL = '/accounts/organizer_login/'
 LOGIN_REDIRECT_URL = '/panel/'
+
 
