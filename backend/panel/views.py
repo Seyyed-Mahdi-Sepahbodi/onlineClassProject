@@ -99,14 +99,7 @@ class EditUserView(LoginRequiredMixin, UpdateView):
     form_class = UserEditForm
 
     def get_success_url(self, **kwargs):
-        print(self.object.contributor_user.id)
-        print(type(self.object.contributor_user.id))
         return reverse('panel:user_info', kwargs={'pk': self.object.contributor_user.id})
-
-    # def get_form_kwargs(self):
-    #     kwargs = super(EditUserView, self).get_form_kwargs()
-    #     kwargs['request'] = self.request
-    #     return kwargs
 
 
 class DeleteUserView(LoginRequiredMixin, View):
@@ -136,7 +129,6 @@ class DeleteUserView(LoginRequiredMixin, View):
         return render(request, 'panel/users-list.html', {'object_list': users_set})
 
 
-
 class FilesListView(ListView):
     template_name = 'panel/files-list.html'
 
@@ -148,11 +140,6 @@ class FilesListView(ListView):
             file_list.extend(room.file_room.all())
         return file_list
 ### ----------------------------------------------------------------------------------------------------------
-
-
-
-
-
 
 
 # class FileDetailsView(DetailView):
@@ -189,30 +176,10 @@ class FilesListView(ListView):
 #     def get_success_url(self, **kwargs):
 #         return reverse('panel:rooms_list')
 
-
-
-
-
-
-
-
-
-
-
-
 class PanelHomeView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'panel/index.html', {'user': request.user})
 
 
-
 class UserProfileView(TemplateView):
     template_name = 'panel/user-info.html'
-
-
-
-
-
-
-
-
