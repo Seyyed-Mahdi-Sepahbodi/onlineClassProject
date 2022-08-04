@@ -1,0 +1,157 @@
+{% extends 'panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>اطلاعات اتاق</title>
+{% endblock title %}
+
+{% block content %}
+    <!-- Content Body Start -->
+    <div class="content-body">
+
+        <!-- Page Headings Start -->
+        <div class="row justify-content-between align-items-center mb-10">
+
+            <!-- Page Heading Start -->
+            <div class="col-12 col-lg-auto mb-20">
+                <div class="page-heading">
+                    <h3>جزئیات اتاق</h3>
+                </div>
+            </div><!-- Page Heading End -->
+            <!-- Page Button Group Start -->
+            <div class="col-12 col-lg-auto mb-20">
+                <div class="buttons-group">
+                    <button class="button button-outline button-warning" type="button" onclick="location.href='{% url 'panel:edit_room' object.id %}';">ویرایش اطلاعات اتاق</button>
+                    <button class="button button-outline button-danger" type="button" onclick="location.href='{% url 'panel:delete_room' object.id %}';">حذف اتاق</button>
+                </div>
+            </div><!-- Page Button Group End -->
+        </div><!-- Page Headings End -->
+
+        <div class="row mbn-30">
+
+            <!--Order Details Customer Information Start-->
+            <div class="col-12 mb-30">
+                <div class="order-details-customer-info row mbn-20">
+                    <div class="col-lg-6 col-md-6 col-12 mb-20">
+                        <ul>
+                            <li> <span>عنوان اتاق</span>{{ object.title }}</li>
+                            <li> <span>برگزارکننده</span>{{ object.organizer }}</li>
+                            
+                            {% if object.status == 'HLD' %}
+                                <li> <span>وضعیت</span><span class="badge badge-outline badge-success">درحال‌برگزاری</span></li>
+                            {% elif object.status == 'CLS' %}
+                                <li> <span>وضعیت</span><span class="badge badge-outline badge-secondary">بسته</span></li>
+                            {% else %}
+                                <li> <span>وضعیت</span><span class="badge badge-outline badge-danger">حذف‌شده</span></li>
+                            {% endif %}         
+
+                            {% if object.allow_guests %}
+                                <li> <span>دسترسی‌ مهمان</span>فعال</li>
+                            {% else %}
+                                <li> <span>دسترسی‌ مهمان</span>غیرفعال</li>
+                            {% endif %}
+
+                            {% if object.operator_first %}
+                                <li> <span>شروع با اپراتور</span>فعال</li>
+                            {% else %}
+                                <li> <span>شروع با اپراتور</span>غیرفعال</li>
+                            {% endif %}
+
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12 mb-20">
+                        <ul>
+                            
+                            {% if object.automatic_ending %}
+                            <li> <span>خروج خودکار</span>فعال</li>
+                            {% else %}
+                            <li> <span>خروج خودکار</span>غیرفعال</li>
+                            {% endif %}
+                            
+                            <li> <span>مدت زمان کلاس</span>{{ object.duration }}</li>
+                            <li> <span>تعداد کاربران</span>{{ object.users_count }}</li>
+                            <li> <span>تعداد فایل‌ها</span>{{ object.files_count }}</li>
+                            <li> <span>تاریخ ایجاد</span>{{ object.created_at }}</li>
+                        </ul>
+                    </div> 
+                </div>
+            </div>
+            <!--Order Details Customer Information Start-->
+
+            <!--Users List Start-->
+            <div class="col-12 mb-30">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-vertical-middle">
+                        <h4>لیست کاربران اتاق</h4>
+                        <thead>
+                            <tr>
+                                <th>نام و نام خانوادگی</th>
+                                <th>شماره موبایل</th>
+                                <th>ایمیل</th>
+                                <th>وضعیت</th>
+                                <th>نوع شرکت‌کننده</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for contributor in object.get_contributors_list %}
+                            <tr>
+                                <td>{{ contributor.user.user.full_name }}</td>
+                                <td>{{ contributor.user.user.mobile_phone_number }}</td>
+                                <td>{{ contributor.user.user.email }}</td>
+                                {% if contributor.user.status == 'NRM' %}
+                                    <td><span class="badge badge-outline badge-success">عادی</span></td>
+                                {% else %}
+                                    <td><span class="badge badge-outline badge-danger">مسدود شده</span></td>
+                                {% endif %}
+                                
+                                {% if contributor.contributor_type == 'OPT' %}
+                                    <td><span class="badge badge-outline badge-info">اپراتور</span></td>
+                                {% elif contributor.contributor_type == 'NRM' %}
+                                    <td><span class="badge badge-outline badge-secondary">عادی</span></td>
+                                {% elif contributor.contributor_type == 'GST' %}
+                                    <td><span class="badge badge-outline badge-warning">مهمان</span></td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--users List End-->
+
+            <!--Users List Start-->
+            <div class="col-12 mb-30">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-vertical-middle">
+                        <h4>لیست فایل‌های اتاق</h4>
+                        <thead>
+                            <tr>
+                                <th>عنوان فایل</th>
+                                <th>کاربر بارگذاری‌کننده</th>
+                                <th>اتاق</th>
+                                <th>حجم</th>
+                                <th>فرمت</th>
+                                <th>تاریخ بارگذاری</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for file in object.file_room.all %}
+                            <tr>
+                                <td>{{ file.title }}</td>
+                                <td>{{ file.user.full_name }}</td>
+                                <td>{{ file.room.title }}</td>
+                                <td>{{ file.size_of_file }}</td>
+                                <td>{{ file.type_of_file }}</td>
+                                <td>{{ file.uploaded_at }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--users List End-->
+
+        </div>
+
+    </div><!-- Content Body End -->
+{% endblock content %}

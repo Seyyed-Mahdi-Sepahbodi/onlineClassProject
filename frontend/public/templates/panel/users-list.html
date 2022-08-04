@@ -1,0 +1,77 @@
+{% extends 'panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>کاربران</title>
+{% endblock title %}
+
+{% block content %}
+    <!-- Content Body Start -->
+    <div class="content-body">
+
+        <!-- Page Headings Start -->
+        <div class="row justify-content-between align-items-center mb-10">
+
+            <!-- Page Heading Start -->
+            <div class="col-12 col-lg-auto mb-20">
+                <div class="page-heading">
+                    <h3>لیست کاربران مشارکت‌کننده در اتاق‌های شما</h3>
+                </div>
+            </div><!-- Page Heading End -->
+            <!-- Page Button Group Start -->
+            <div class="col-12 col-lg-auto mb-20">
+                <div class="buttons-group">
+                    <button class="button button-outline button-success" type="button" onclick="location.href='{% url 'panel:new_user' %}';">افزودن کاربر جدید</button>
+                </div>
+            </div><!-- Page Button Group End -->
+
+        </div><!-- Page Headings End -->
+
+        <div class="row mbn-30">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table table-vertical-middle">
+                        <thead>
+                            <tr>
+                                <th>نام‌کاربری</th>
+                                <th>نام</th>
+                                <th>نام‌خانوادگی</th>
+                                <th>ایمیل</th>
+                                <th>شماره موبایل</th>
+                                <th>وضعیت</th>
+                                <th>گزینه‌های دردسترس</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in object_list %}
+                                <tr>
+                                    <td>{{ user.user.username }}</td>
+                                    <td>{{ user.user.first_name }}</td>
+                                    <td>{{ user.user.last_name }}</td>
+                                    <td>{{ user.user.email }}</td>
+                                    <td>{{ user.user.mobile_phone_number }}</td>
+                                    
+                                    {% if user.status == 'BND' %}
+                                        <td><span class="badge badge-outline badge-danger">مسدود‌شده</span></td>
+                                    {% else %}
+                                        <td><span class="badge badge-outline badge-info">عادی</span></td>
+                                    {% endif %}                                        
+                                    <td>
+                                        <div class="table-action-buttons">
+                                            <a class="view button button-box button-xs button-primary" href="{% url 'panel:user_info' user.id %}"><i class="zmdi zmdi-more"></i></a>
+                                            <a class="edit button button-box button-xs button-info" href="{% url 'panel:edit_user' user.id %}"><i class="zmdi zmdi-edit"></i></a>
+                                            <a class="delete button button-box button-xs button-danger" href="{% url 'panel:delete_user' user.id %}"><i class="zmdi zmdi-delete"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                                
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- Content Body End -->
+{% endblock content %}
+    

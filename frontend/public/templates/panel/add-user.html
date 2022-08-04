@@ -1,0 +1,58 @@
+{% extends 'panel/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}
+    <title>ایجاد کاربر</title>
+{% endblock title %}
+
+{% block content %}
+    <!-- Content Body Start -->
+    <div class="content-body">
+
+        <!-- Page Headings Start -->
+        <div class="row justify-content-between align-items-center mb-10">
+
+            <!-- Page Heading Start -->
+            <div class="col-12 col-lg-auto mb-20">
+                <div class="page-heading">
+                    <h3>ایجاد کاربر جدید<span></span></h3>
+                </div>
+            </div><!-- Page Heading End -->
+        </div><!-- Page Headings End -->
+
+        <!-- Add or Edit Product Start -->
+        <div class="add-edit-product-wrap col-12">
+
+            <div class="add-edit-product-form">
+                <form action="#" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h4 class="title">افزودن کاربر</h4>
+                    <class class="row">
+                        <div class="col-lg-6 col-12 mb-30">{% render_field form.first_name class='form-control' placeholder='نام' %}</div>
+                        <div class="col-lg-6 col-12 mb-30">{% render_field form.last_name class='form-control' placeholder='نام‌خانوادگی' %}</div>
+                        <div class="col-lg-6 col-12 mb-30">{% render_field form.email class='form-control' placeholder='ایمیل' %}</div>
+                        <div class="col-lg-6 col-12 mb-30">{% render_field form.mobile_phone_number class='form-control' placeholder='شماره‌موبایل' %}</div>
+                        <div class="col-lg-6 col-12 mb-30">{% render_field form.gender class='form-control' placeholder='جنسیت' %}</div>
+                        <div class="col-lg-6 col-12 mb-30">{% render_field form.contributor_type class='form-control' placeholder='رمز‌عبور' %}</div>
+                        <div class="col-lg-12 col-12 mb-30">{% render_field form.room class='form-control' placeholder='رمز‌عبور' %}</div>
+                        <div class="col-lg-6 col-12 mb-30">{% render_field form.password1 class='form-control' placeholder='رمز‌عبور' %}</div>
+                        <div class="col-lg-6 col-12 mb-30">{% render_field form.password2 class='form-control' placeholder='تکرار رمز‌عبور' %}</div>
+                    </class>
+
+                    <!-- Button Group Start -->
+                    <div class="row">
+                        <div class="d-flex flex-wrap justify-content-end col mbn-10">
+                            <button class="button button-outline button-primary mb-10 ml-10 mr-0" type="submit">ایجاد اتاق</button>
+                            <button class="button button-outline button-danger mb-10 ml-10 mr-0" type="button" onclick="location.href='{% url 'panel:users_list' %}';">انصراف</button>
+                        </div>
+                    </div><!-- Button Group End -->
+
+                </form>
+            </div>
+
+        </div><!-- Add or Edit Product End -->
+
+    </div><!-- Content Body End -->
+{% endblock content %}
+    

@@ -1,0 +1,50 @@
+{% extends 'panel/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}
+    <title>حذف اتاق</title>
+{% endblock title %}
+
+{% block content %}
+    <!-- Content Body Start -->
+    <div class="content-body">
+
+        <!-- Page Headings Start -->
+        <div class="row justify-content-between align-items-center mb-10">
+
+            <!-- Page Heading Start -->
+            <div class="col-12 col-lg-auto mb-20">
+                <div class="page-heading">
+                    <h3>حذف اتاق {{object.title}}</h3>
+                </div>
+            </div><!-- Page Heading End -->
+        </div><!-- Page Headings End -->
+
+        <!-- Add or Edit Product Start -->
+        <div class="add-edit-product-wrap col-12">
+
+            <div class="add-edit-product-form">
+                <form action="#" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <class class="row">
+                        آیا از حذف اتاق با عنوان {{ object.title }} مطمئن هستید؟
+                    </class>
+
+                    <!-- Button Group Start -->
+                    <div class="row">
+                        <div class="d-flex flex-wrap justify-content-end col mbn-10">
+                            <button class="button button-outline button-primary mb-10 ml-10 mr-0" type="submit">تایید</button>
+                            <button class="button button-outline button-danger mb-10 ml-10 mr-0" type="button" onclick="location.href='{% url 'panel:room_details' object.id %}';">انصراف</button>
+                        </div>
+                    </div><!-- Button Group End -->
+
+                </form>
+            </div>
+
+        </div><!-- Add or Edit Product End -->
+
+    </div><!-- Content Body End -->
+{% endblock content %}
+    

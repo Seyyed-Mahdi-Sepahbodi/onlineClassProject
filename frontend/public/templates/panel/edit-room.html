@@ -1,0 +1,78 @@
+{% extends 'panel/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}
+    <title>ویرایش اتاق</title>
+{% endblock title %}
+
+{% block content %}
+    <!-- Content Body Start -->
+    <div class="content-body">
+
+        <!-- Page Headings Start -->
+        <div class="row justify-content-between align-items-center mb-10">
+
+            <!-- Page Heading Start -->
+            <div class="col-12 col-lg-auto mb-20">
+                <div class="page-heading">
+                    <h3>ویرایش اطلاعات اتاق {{object.title}}</h3>
+                </div>
+            </div><!-- Page Heading End -->
+        </div><!-- Page Headings End -->
+
+        <!-- Add or Edit Product Start -->
+        <div class="add-edit-product-wrap col-12">
+
+            <div class="add-edit-product-form">
+                <form action="#" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <h4 class="title">ویرایش اطلاعات اتاق</h4>
+                    
+                    <class class="row">
+                        <div class="col-lg-6 col-12 mb-30">{% render_field form.title class='form-control' placeholder='عنوان اتاق' %}</div>
+                        <div class="col-lg-6 col-12 mb-30">{% render_field form.status class='form-control' placeholder='وضعیت' %}</div>
+                        <div class="col-lg-4 col-12 mb-30">
+                            <div class="col-lg-7">
+                                <div class="row">
+                                    <div class="col-lg-6">{% render_field form.allow_guests class='form-control' id='guests' %}</div>
+                                    <div class="col-lg-6"><label for="guests">مهمان</label></div>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-12 mb-30">
+                            <div class="col-lg-7">
+                                <div class="row">
+                                    <div class="col-lg-4">{% render_field form.operator_first class='form-control' id='operator' %}</div>
+                                    <div class="col-lg-8"><label for="operator">بازگشایی‌توسط‌اپراتور</label></div>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-12 mb-30">
+                            <div class="col-lg-7">
+                                <div class="row">
+                                    <div class="col-lg-4">{% render_field form.automatic_ending class='form-control' id='ending' %}</div>
+                                    <div class="col-lg-8"><label for="ending">اتمام خودکار</label></div>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-12 mb-30">{% render_field form.duration class='form-control' placeholder='مدت زمان' %}</div>
+                    </class>
+
+                    <!-- Button Group Start -->
+                    <div class="row">
+                        <div class="d-flex flex-wrap justify-content-end col mbn-10">
+                            <button class="button button-outline button-primary mb-10 ml-10 mr-0" type="submit">ثبت تغییرات</button>
+                            <button class="button button-outline button-danger mb-10 ml-10 mr-0" type="button" onclick="location.href='{% url 'panel:room_details' object.id %}';">انصراف</button>
+                        </div>
+                    </div><!-- Button Group End -->
+
+                </form>
+            </div>
+
+        </div><!-- Add or Edit Product End -->
+
+    </div><!-- Content Body End -->
+{% endblock content %}
+    

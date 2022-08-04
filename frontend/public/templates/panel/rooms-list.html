@@ -1,0 +1,89 @@
+{% extends 'panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>اتاق‌ها</title>
+{% endblock title %}
+
+{% block content %}
+    <!-- Content Body Start -->
+    <div class="content-body">
+
+        <!-- Page Headings Start -->
+        <div class="row justify-content-between align-items-center mb-10">
+
+            <!-- Page Heading Start -->
+            <div class="col-12 col-lg-auto mb-20">
+                <div class="page-heading">
+                    <h3>لیست اتاق‌ها</h3>
+                </div>
+            </div><!-- Page Heading End -->
+            <!-- Page Button Group Start -->
+            <div class="col-12 col-lg-auto mb-20">
+                <div class="buttons-group">
+                    <button class="button button-outline button-success" type="button" onclick="location.href='{% url 'panel:new_room' %}';">ایجاد اتاق</button>
+                </div>
+            </div><!-- Page Button Group End -->
+        </div><!-- Page Headings End -->
+
+        <div class="row">
+            <!--Manage Product List Start-->
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table table-vertical-middle">
+                        <thead>
+                            <tr>
+                                <th>شناسه</th>
+                                <th>عنوان</th>
+                                <th>برگزار کننده</th>
+                                <th>وضعیت</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {% for room in object_list %}
+                                <tr>
+                                    <td>{{ room.id }}</td>
+                                    <td>{{ room.title }}</td>
+                                    <td>{{ room.organizer }}</td>
+                                    
+                                    {% if room.status == 'HLD' %}
+                                        <td><span class="badge badge-outline badge-success">درحال برگزاری</span></td>
+                                    {% elif room.status == 'CLS' %}
+                                        <td><span class="badge badge-outline badge-info">بسته</span></td>
+                                    {% elif room.status == 'RMV' %}
+                                        <td><span class="badge badge-outline badge-danger">حذف شده</span></td>
+                                    {% endif %}
+
+                                    
+                                    {% if room.status == 'RMV' %}
+                                    <td>
+                                        <div class="table-action-buttons">
+                                            <a class="view button button-box button-xs button-primary" href="{% url 'panel:room_details' room.id %}"><i class="zmdi zmdi-more"></i></a>
+                                        </div>
+                                    </td>
+                                    {% else %}
+                                    <td>
+                                        <div class="table-action-buttons">
+                                            <a class="view button button-box button-xs button-primary" href="{% url 'panel:room_details' room.id %}"><i class="zmdi zmdi-more"></i></a>
+                                            <a class="edit button button-box button-xs button-info" href="{% url 'panel:edit_room' room.id %}"><i class="zmdi zmdi-edit"></i></a>
+                                            <a class="delete button button-box button-xs button-danger" href="{% url 'panel:delete_room' room.id %}"><i class="zmdi zmdi-delete"></i></a>
+                                        </div>
+                                    </td>
+                                    {% endif %}
+                                        
+                                    
+                                </tr>
+                            {% endfor %}
+                                
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--Manage Product List End-->
+
+        </div>
+
+    </div><!-- Content Body End -->
+{% endblock content %}
+    

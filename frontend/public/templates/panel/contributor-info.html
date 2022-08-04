@@ -1,0 +1,131 @@
+{% extends 'panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>اطلاعات کاربر</title>
+{% endblock title %}
+
+{% block content %}
+    <!-- Content Body Start -->
+    <div class="content-body">
+
+        <!-- Page Headings Start -->
+        <div class="row justify-content-between align-items-center mb-10">
+
+            <!-- Page Heading Start -->
+            <div class="col-12 col-lg-auto mb-20">
+                <div class="page-heading">
+                    <h3>اطلاعات کاربر</h3>
+                </div>
+            </div><!-- Page Heading End -->
+            <!-- Page Button Group Start -->
+            <div class="col-12 col-lg-auto mb-20">
+                <div class="buttons-group">
+                    <button class="button button-outline button-warning" type="button" onclick="location.href='{% url 'panel:edit_user' object.user.id %}';">ویرایش اطلاعات کاربر</button>
+                    <button class="button button-outline button-danger" type="button" onclick="location.href='{% url 'panel:delete_user' object.user.id %}';">حذف کاربر</button>
+                </div>
+            </div><!-- Page Button Group End -->
+        </div><!-- Page Headings End -->
+
+        <div class="row mbn-30">
+
+            <!--Order Details Customer Information Start-->
+            <div class="col-12 mb-30">
+                <div class="order-details-customer-info row mbn-20">
+                    <div class="col-lg-6 col-md-6 col-12 mb-20">
+                        <ul>
+                            <li> <span>نام کاربری</span>{{ object.user.username }}</li>
+                            <li> <span>نام</span>{{ object.user.first_name }}</li>
+                            <li> <span>نام‌خانوادگی</span>{{ object.user.last_name }}</li>
+                            <li> <span>ایمیل</span>{{ object.user.email }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12 mb-20">
+                        <ul>
+                            <li> <span>شماره‌موبایل</span>{{ object.user.mobile_phone_number }}</li>
+                            
+                            {% if object.user.gender == 'F' %}
+                                <li> <span>جنسیت</span><span class="badge badge-outline badge-danger">خانم</span></li>
+                            {% elif object.user.gender == 'M' %}
+                                <li> <span>وضعیت</span><span class="badge badge-outline badge-warning">آقا</span></li>
+                            {% else %}
+                                <li> <span>جنسیت</span><span class="badge badge-outline badge-dark">نامشخص</span></li>
+                            {% endif %}
+
+                            {% if object.status == 'BND' %}
+                                <li> <span>وضعیت</span><span class="badge badge-outline badge-danger">مسدود‌شده</span></li>
+                            {% else %}
+                                <li> <span>وضعیت</span><span class="badge badge-outline badge-info">عادی</span></li>
+                            {% endif %}    
+                        </ul>
+                    </div> 
+                </div>
+            </div>
+            <!--Order Details Customer Information Start-->
+
+            <!--Users List Start-->
+            <div class="col-12 mb-30">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-vertical-middle">
+                        <h4>لیست اتاق‌های شما که کاربر عضو آنها می‌باشد</h4>
+                        <thead>
+                            <tr>
+                                <th>نام اتاق</th>
+                                <th>نقش کاربر</th>
+                                <th>تاریخ شروع عضویت</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in object.room_contributor_user.all %}
+                            <tr>
+                                <td>{{ record.room.title }}</td>     
+                                {% if record.contributor_type == 'OPT' %}
+                                    <td><span class="badge badge-outline badge-info">اپراتور</span></td>
+                                {% elif record.contributor_type == 'NRM' %}
+                                    <td><span class="badge badge-outline badge-secondary">عادی</span></td>
+                                {% elif record.contributor_type == 'GST' %}
+                                    <td><span class="badge badge-outline badge-warning">مهمان</span></td>
+                                {% endif %}
+                                <td>{{ record.contribution_start_date }}</td>  
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--users List End-->
+
+            <!--Users List Start-->
+            <div class="col-12 mb-30">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-vertical-middle">
+                        <h4>لیست فایل‌های به اشتراک گذاشته‌شده توسط کاربر</h4>
+                        <thead>
+                            <tr>
+                                <th>عنوان فایل</th>
+                                <th>اتاق</th>
+                                <th>حجم</th>
+                                <th>فرمت</th>
+                                <th>تاریخ بارگذاری</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for file in object.user.file_user.all %}
+                            <tr>
+                                <td>{{ file.title }}</td>
+                                <td>{{ file.room.title }}</td>
+                                <td>{{ file.size_of_file }}</td>
+                                <td>{{ file.type_of_file }}</td>
+                                <td>{{ file.uploaded_at }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--users List End-->
+
+        </div>
+
+    </div><!-- Content Body End -->
+{% endblock content %}

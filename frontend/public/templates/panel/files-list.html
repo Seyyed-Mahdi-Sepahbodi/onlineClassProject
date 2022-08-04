@@ -1,0 +1,54 @@
+{% extends 'panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>فایل‌ها</title>
+{% endblock title %}
+
+{% block content %}
+    <!-- Content Body Start -->
+    <div class="content-body">
+        <!-- Page Headings Start -->
+        <div class="row justify-content-between align-items-center mb-10">
+            <!-- Page Heading Start -->
+            <div class="col-12 col-lg-auto mb-20">
+                <div class="page-heading">
+                    <h3 class="title">فایل‌های موجود در اتاق‌های شما</h3>
+                </div>
+            </div><!-- Page Heading End -->
+        </div><!-- Page Headings End -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table table-vertical-middle">
+                        <thead>                               
+                            <tr>
+                                <th>نام فایل</th>
+                                <th>اتاق</th>
+                                <th>بارگذاری‌کننده</th>
+                                <th>حجم</th>
+                                <th>فرمت‌فایل</th>
+                                <th>تاریخ‌بارگذاری</th>
+                            </tr>                                   
+                        </thead>
+                        <tbody>
+                                
+                            {% for file in object_list %}
+                            <tr>
+                                <td>{{file.title}}</td>
+                                <td>{{file.room}}</td>
+                                <td>{{file.user}}</td>
+                                <td>{{file.size_of_file}}</td>
+                                <td>{{file.type_of_file}}</td>
+                                <td>{{file.uploaded_at}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!-- Content Body End -->
+{% endblock content %}
+    

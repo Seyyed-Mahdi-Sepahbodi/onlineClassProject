@@ -11,8 +11,6 @@ from .models import Rooms, ContributorRoom
 # Create your views here.
 
 class PanelHomeView(LoginRequiredMixin, TemplateView):
-    # def get(self, request):
-    #     return render(request, 'panel/index.html', {'user': request.user})
     template_name = 'panel/index.html'
 
 class RoomsListView(LoginRequiredMixin, ListView):
