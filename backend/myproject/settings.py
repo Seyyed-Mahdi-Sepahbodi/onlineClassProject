@@ -42,6 +42,12 @@ INSTALLED_APPS = [
     # third party apps
     'rest_framework',
 
+    # my_apps
+    'room.apps.RoomConfig',
+    'panel.apps.PanelConfig',
+    'accounts.apps.AccountsConfig',
+    'frontend.apps.FrontendConfig',
+
 
 ]
 
@@ -132,3 +138,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, '../frontend/build/static'),
 ]
+
+AUTH_USER_MODEL = 'accounts.CustomUsers'
+
+LOGIN_URL = '/accounts/organizer_login/'
+LOGIN_REDIRECT_URL = '/panel/'
+
