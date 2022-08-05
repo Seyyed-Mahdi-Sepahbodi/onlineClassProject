@@ -5,6 +5,7 @@ from .models import *
 
 class OrganizerUsersAdmin(admin.ModelAdmin):
     list_display = [
+        # 'avatar',
         'user', 
         'number_of_rooms',
         'number_of_contributors',

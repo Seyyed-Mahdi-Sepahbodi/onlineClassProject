@@ -66,7 +66,8 @@ ROOT_URLCONF = 'myproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, '../frontend/public/templates/')],
+        'DIRS': [os.path.join(BASE_DIR, '../frontend/public/templates/'),
+                 os.path.join(BASE_DIR, '../frontend/public/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -136,7 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, '../frontend/build/static'),
+    os.path.join(BASE_DIR, '../frontend/public/static'),
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUsers'
@@ -144,4 +145,6 @@ AUTH_USER_MODEL = 'accounts.CustomUsers'
 LOGIN_URL = '/accounts/organizer_login/'
 LOGIN_REDIRECT_URL = '/panel/'
 
+MEDIA_ROOT = '/media/'
 
+MEDIA_URL = '/media/'
