@@ -1,3 +1,4 @@
+
 * {
     box-sizing: border-box;
 }
@@ -9,6 +10,7 @@ body {
 }
 
 .room {
+    position: relative;
     background-color: rgb(39, 33, 33);
     width: 100%;
     height: 100vh;
@@ -24,13 +26,19 @@ body {
 }
 
 .sharedScreen {
-    width: 80%;
+    width: 100%;
     color: rgb(112, 112, 112);
     font-size: 2.2em;
     text-align: center;
+    transition: all ease-in-out 0.5s;
+}
+
+.sharedScreen.active {
+    width: 80%;
 }
 
 .messagesPanel {
+    opacity: 0%;
     position: absolute;
     right: 10px;
     display: block;
@@ -40,7 +48,11 @@ body {
     color: rgb(112, 112, 112);
     background-color: white;
     border-radius: 15%;
-    transition: all 1s ease 0s;
+    transition: all ease-in-out 0.2s;
+}
+
+.messagesPanel.active {
+    opacity: 100%;
 }
 
 .messagesPanel .messagesHeader {
@@ -53,7 +65,7 @@ body {
 .messagesPanel .messages {
     position: relative;
     margin-top: 30px;
-    height: 85%;
+    height: 65%;
     overflow-y: auto;
 }
 
@@ -96,33 +108,26 @@ body {
     height: 10%;
     bottom: 20px;
     right: 15px;
-}
-
-.messagesPanel .typeBox > input[type=text] {
-    width: 90%;
-    height: 100%;
+    justify-content: space-between;
+    align-items: center;
     border-width: 1px;
     border-style: solid;
     border-color: rgb(112, 112, 112);
     border-image: initial;
+    margin: auto;
     border-radius: 20px;
-    padding: 12px 10px;
 }
 
-.messagesPanel .typeBox > input[type=submit] {
-    width: 20%;
-    height: 100%;
-    background-image: url(/icon/send.png);
-    background-size: 50%;
-    background-repeat: no-repeat;
-    background-position: center;
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(112, 112, 112);
-    border-image: initial;
-    border-radius: 50px;
-    padding: 20px;
-    margin-left: 8px;
+.messagesPanel .typeBox > p {
+    padding-left: 7px;
+    align-self: center;
+}
+
+.messagesPanel .typeBox > img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 5%;
 }
 
 /* Users */
@@ -130,152 +135,336 @@ body {
 .users {
     position: absolute;
     width: 95%;
-    height: 20%;
-    bottom: 75px;
-    margin: auto;
+    min-height: 20%;
+    bottom: 60px;
+    margin: 0 auto;
+    overflow-x: scroll;
+    display: flex;
+    flex-direction: row;
+	flex-wrap: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
 
-.users .boxes {
-    width: 100%;
-    overflow-x: auto;
-    text-align: center;
-}
-
-.users .boxes > ul {
-    display: grid;
-    grid-template-columns: repeat(150, 1fr);
-    list-style: none;
-    gap: 30px;
-}
-
-.users .boxes > ul > li {
+.card {
     position: relative;
-    background-color: rgb(20, 14, 14);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 60px 90px;
+    max-width: 125px;
+    height: 100px;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
+    padding: 8px 80px;
+    margin-left: 10px;
+    cursor: pointer;
+    background-color: #140E0E;
+    border-radius: 5%;
 }
 
-.users .boxes > ul > li .circle {
+.card:hover{
+    transform: rotateY(180deg);
+}
+
+.frontCard, .backCard {
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.frontCard {
     position: absolute;
-    display: flex;
-    text-align: center;
+    bottom: 0;
+    left: 0;
 }
 
-.users .boxes > ul > li > .circle > img {
+.frontCard .circle {
+    position: absolute;
+    right: 30%;
+    top: 18%;
+}
+
+.frontCard .circle > img {
     width: 65px;
     height: 65px;
     border-radius: 50%;
 }
 
-.users .boxes > ul > li > p {
+.frontCard > p {
     position: absolute;
-    bottom: -6%;
-    left: 7%;
+    bottom: -15px;
+    left: 0px;
     color: white;
     font-size: 12px;
+    padding: 5px;
 }
 
 
-.underline {
+.backCard {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    border-radius: 5%;
+    text-align: center;
+    overflow: hidden;
+    /* background-color: #2980b9; */
+    background-color: #272121;
+    color: white;
+    transform: rotateY(180deg);
+    width: 100%;
+}
+
+.backCard .details {
+    position: absolute;
+    left: 30%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    
+}
+
+.backCard .details > p {
+    font-size: 13px;
+    color: black;
+}
+
+.backCard .details > span {
+    font-size: 15px;
+    font-weight: 800;
+    color: #DC1515;
+}
+
+.backCard .details .fullName {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
+.backCard .details .idCard {
+    margin: 0;
+    margin-top: 8px;
+}
+
+/*.users .boxes .frontCard {
+    display: grid;
+    grid-template-columns: repeat(150, 1fr);
+    list-style: none;
+    gap: 20px; 
+}*/
+
+
+/* .users .boxes .card{
+    position: relative;
+    background-color: rgb(20, 14, 14);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 65px;
+    border-radius: 5%;
+    transition: all ease-in-out 0.5s;
+}
+
+
+
+.users .boxes .card .fronCard .circle {
+    position: absolute;
+    display: flex;
+    text-align: center;
+}
+
+.users .boxes > .card .fronCard .circle > img {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+}
+
+.users .boxes > .card .fronCard > p {
+    position: absolute;
+    bottom: -10px;
+    left: 0px;
+    color: white;
+    font-size: 12px;
+    padding: 5px;
+} */
+
+
+/* .underline {
     position: absolute;
     display: block;
     width: 100%;
     margin-top: 10px;
     bottom: 75px;
-    border-width: 0.5px;
+    /* border-width: 0.5px;
     border-style: solid;
     border-color: rgb(112, 112, 112);
-    border-image: initial;
-}
+    border-image: initial; 
+}*/
 
-/* footerPanel */
 
-.footerPanel {
+/* Footer */
+
+footer{
     position: absolute;
-    width: 100%;
-    height: 10%;
-    bottom: 0px;
-    margin: auto;
     display: flex;
-    align-items: center;
-    padding: 10px;
+    height: 8%;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-end;
+    bottom: 0;
+    padding: 0 10px;
 }
 
-.footerPanel >p {
-    justify-content: left;
-    flex-grow: 1;
+footer > p {
+    color: #707070;
+}
+
+footer > .middleIcons > ul {
+    display: flex;
+    color: white;
+    list-style: none;
+    margin-top: 15px;
+}
+
+footer > .middleIcons > ul > li {
+    padding: 5px 5px 0 5px;
+    border: 1px solid #707070;
+    border-radius: 50%;
+    margin:0 10px;
+    font-size: 18px;
+    background-color: #2E2929;
+    cursor: pointer;
+    transition:all ease-in-out 0.2s;
+}
+
+footer > .middleIcons > ul > li:hover{
+    background-color: purple;
+    color: black;
+    border-color: purple;
+}
+
+footer > .rightIcons > ul {
+    list-style: none;
+}
+
+footer > .rightIcons > ul > li {
+    color: rgb(219, 61, 61);
+    font-size: 25px;
+    padding: 5px 5px 0 5px;
+    margin-top: 5px;
+    border-right: 1px solid rgba(219, 61, 61, 0);
+    transition: all ease-in-out 0.2s;
+}
+
+.toggle {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.toggle.active{
+    border-right: 1px solid rgba(219, 61, 61, 100);
+}
+
+/* Icons */
+
+.COut {
+    color: white;
+    background-color: red !important;
+}
+
+.COut:hover {
+    border-color: red !important;
+}
+
+/* User box icons */
+
+.IconUser {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.IconUser > ul {
+    margin: 0;
+    padding: 0;
+}
+
+.IconUser > ul > li {
+    margin: 0;
+    padding: 0;
+}
+
+.mic {
+    position: absolute;
+    display: block !important;
+    right: 2%;
+    top: 15%;
     color: white;
 }
 
-.CenterMenu {
-    flex-grow: 3;
-}
-
-.RightMenu {
-    flex-grow: 1;
-}
-
-.CenterMenu >ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-.CenterMenu >ul >li >img {
-    width: 20px;
-    height: 20px;
-    border-radius: 10%;
-}
-
-.CenterMenu >ul >li {
-    position: relative;
-    background-color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 10px;
-    border-radius: 50%;
-    margin: 0px 10px 0px 10px;
-}
-
-.RightMenu >ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: right;
-
-}
-
-.RightMenu >ul >li >img {
-    width: 20px;
-    height: 20px;
-}
-
-.RightMenu >ul >li {
-    position: relative;
-    background-color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 10px;
-    border-radius: 50%;
-}
-
-/* icon image */
-
-.IconUser {
+.webcam {
     position: absolute;
-    right: 7%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: block !important;
+    right: 2%;
+    top: 35%;
+    color: white;
 }
 
-.IconUser >img {
-    width: 15px;
-    height: 15px;
-    border-radius: 10%;
-    margin: 25%;
+.shareScreen {
+    position: absolute;
+    display: block !important;
+    right: 2%;
+    top: 55%;
+    color: white;
 }
+
+.raiseHand {
+    position: absolute;
+    display: block !important;
+    right: 2%;
+    top: 75%;
+    color: white;
+}
+
+
+
+/* Scrollbar  */
+
+::-webkit-scrollbar {
+    height: 7px;
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  /* Scrollbar */
+  ::-webkit-scrollbar-thumb {
+    background: red; 
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:vertical {
+    background-color: grey !important;
+    border-radius: 10px;
+  }
+  
+  /* Scrollbar on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b30000; 
+    cursor: pointer;
+  }
