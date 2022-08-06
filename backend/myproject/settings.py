@@ -145,6 +145,6 @@ AUTH_USER_MODEL = 'accounts.CustomUsers'
 LOGIN_URL = '/accounts/organizer_login/'
 LOGIN_REDIRECT_URL = '/panel/'
 
-MEDIA_ROOT = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 MEDIA_URL = '/media/'

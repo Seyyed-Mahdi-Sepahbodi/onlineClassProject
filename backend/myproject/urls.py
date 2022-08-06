@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('panel.urls')),
     path('accounts/', include('accounts.urls')),
     path('frontend/', include('frontend.urls')),
+    path('room/', include('room.urls'))
 ]
 
 if settings.DEBUG:
