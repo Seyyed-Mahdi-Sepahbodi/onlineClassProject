@@ -22,4 +22,8 @@ class RoomsUsersListAPIView(ListAPIView):
 
 class ChangeUserMicrophoneStatusAPIView(UpdateAPIView):
     pass
+
+
+def room(request):
+    return render(request, 'room/room.html')
     

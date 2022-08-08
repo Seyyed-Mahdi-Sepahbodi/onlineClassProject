@@ -3,6 +3,11 @@ from . import views
 
 app_name = 'room'
 urlpatterns = [
+
+    # api paths
     path('api/<int:room_id>/', views.RoomsUsersListAPIView.as_view(), name='room_users'),
     path('api/microphone/<int:user_id>/', views.ChangeUserMicrophoneStatusAPIView.as_view(), name='user_microphone'),
+    
+    # paths
+    path('', views.room, name='room_page'),
 ]
