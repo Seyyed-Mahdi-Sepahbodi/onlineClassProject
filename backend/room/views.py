@@ -3,8 +3,25 @@ from .serializers import UserDetailSerializer
 from rest_framework.generics import ListAPIView, UpdateAPIView
 from accounts.models import ContributorUsers
 from panel import models
+from agora_token_builder import RtcTokenBuilder
+from django.http import JsonResponse
+import random
+import time
 
 # Create your views here.
+
+def getToken(request):
+    appId = 'a5037e50b65946fb9a1e60ea134901be'
+    appCertificate = 'e75f08b946bd47f1a199d9665068bfcd'
+    channelName = request.GET.get('channel')
+    uid = random.randint(1, 230)
+    expirationTimeInSeconds = 3600 * 24
+    currentTimeStamp = time.time()
+    privilegeExpiredTs = currentTimeStamp + expirationTimeInSeconds
+    role = 1 # host = 1 and guest = 0
+
+    token = RtcTokenBuilder.buildTokenWithUid(appId, appCertificate, channelName, uid, role, privilegeExpiredTs)
+    return JsonResponse({'token':token, 'uid':uid}, safe=False)
 
 class RoomsUsersListAPIView(ListAPIView):
     serializer_class = UserDetailSerializer

@@ -11,4 +11,6 @@ urlpatterns = [
     # paths
     path('', views.lobby, name='room_lobby'),
     path('room/', views.room, name='room_page'),
+
+    path('get_token/', views.getToken, name='get_token'),
 ]
