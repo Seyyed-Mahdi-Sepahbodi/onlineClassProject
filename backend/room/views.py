@@ -23,6 +23,8 @@ class RoomsUsersListAPIView(ListAPIView):
 class ChangeUserMicrophoneStatusAPIView(UpdateAPIView):
     pass
 
+def lobby(request):
+    return render(request, 'room/lobby.html')
 
 def room(request):
     return render(request, 'room/room.html')

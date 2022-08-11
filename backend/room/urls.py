@@ -9,5 +9,6 @@ urlpatterns = [
     path('api/microphone/<int:user_id>/', views.ChangeUserMicrophoneStatusAPIView.as_view(), name='user_microphone'),
     
     # paths
-    path('', views.room, name='room_page'),
+    path('', views.lobby, name='room_lobby'),
+    path('room/', views.room, name='room_page'),
 ]
