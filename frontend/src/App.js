@@ -8,19 +8,55 @@ import {
 } from "react-icons/fa";
 import { TbScreenShare } from "react-icons/tb";
 import { BsChatRightTextFill } from "react-icons/bs";
+import { SiGooglechat } from "react-icons/si"
+
+
+import PrivateMessages from "./Components/PrivateMessages/PrivateMessages";
+
+
 
 class App extends Component {
   state = {
+    Chat:false,
+    Name:"",
+    Messages: [''],
     isActive: false,
+    privateIsActive: false,
     isBack: false,
+    togglePrivateChat: false,
     StartMicroPhone: false,
     StartWebcam: false,
     StartRaiseHand: false,
     StartShareScreen: false,
   };
 
+  handlePrivateIsActive = (chat, name) => {
+    if (this.state.privateIsActive===false && this.state.isActive===true)
+    {
+      this.setState({isActive: !this.state.isActive})
+    }
+
+    /* Find messages */
+    if(name !== "")
+    {
+      /* search database with name or smt and find messages of this user */
+      /* and setState it */
+    }
+
+    this.setState({privateIsActive: !this.state.privateIsActive, Chat: chat, Name: name});
+  }
+
   handleToggle = () => {
+    if (this.state.privateIsActive===true && this.state.isActive===false)
+    {
+      this.setState({privateIsActive: !this.state.privateIsActive})
+    }
     this.setState({ isActive: !this.state.isActive });
+  };
+
+  handleTogglePrivateChat = chat => () => {
+    this.setState({togglePrivateChat: !this.state.togglePrivateChat, Chat: chat}
+      /* send a request for receive informations from database about message of a user that click on it */)
   };
 
   handleRotationCard = () => {
@@ -47,16 +83,20 @@ class App extends Component {
   render() {
     const isActive = this.state.isActive;
     const isBack = this.state.isBack;
+    const privateIsActive = this.state.privateIsActive;
+    let Chat = this.state.Chat;
+    let Name = this.state.Name;
+    let Messages = this.state.Messages;
 
     return (
       <div>
         <div className="room">
           <div className="middleContent">
-            <div class={isActive ? "sharedScreen active" : "sharedScreen"}>
+            <div class={(isActive || privateIsActive) ? "sharedScreen active" : "sharedScreen"}>
               Shared Screen
             </div>
             <div class={isActive ? "messagesPanel active" : "messagesPanel"}>
-              <h3 class="messagesHeader">messages</h3>
+              <h3 class="messagesHeader">public messages</h3>
               <div class="messages">
                 <ul>
                   <li>
@@ -101,7 +141,10 @@ class App extends Component {
                 <span>icon</span>
               </div>
             </div>
-          </div>
+
+              {privateIsActive ? <PrivateMessages chat={Chat} name={Name} messages={Messages} /> : null}
+
+            </div>
           <div className="users">
 
 
@@ -143,12 +186,14 @@ class App extends Component {
                 <p>
                     lisa
                 </p>
+              </div>
               {/* end front card*/}
 
               <div className="backCard">
                 <div className="details">
                     <p className="fullName">Full Name</p><span>Lisa</span>
                     <p className="idCard">ID Card</p><span>8546321</span>
+                    <button onClick={() => this.handlePrivateIsActive(false, "Lisa")} className="startChat">Start Chat</button>
                 </div>
               </div>
 
@@ -201,6 +246,7 @@ class App extends Component {
                 <div className="details">
                     <p className="fullName">Full Name</p><span>Lisa</span>
                     <p className="idCard">ID Card</p><span>8546321</span>
+                    <button className="startChat">Start Chat</button>
                 </div>
               </div>
 
@@ -252,6 +298,7 @@ class App extends Component {
                 <div className="details">
                     <p className="fullName">Full Name</p><span>Lisa</span>
                     <p className="idCard">ID Card</p><span>8546321</span>
+                    <button className="startChat">Start Chat</button>
                 </div>
               </div>
 
@@ -303,6 +350,7 @@ class App extends Component {
                 <div className="details">
                     <p className="fullName">Full Name</p><span>Lisa</span>
                     <p className="idCard">ID Card</p><span>8546321</span>
+                    <button className="startChat">Start Chat</button>
                 </div>
               </div>
 
@@ -354,6 +402,7 @@ class App extends Component {
                 <div className="details">
                     <p className="fullName">Full Name</p><span>Lisa</span>
                     <p className="idCard">ID Card</p><span>8546321</span>
+                    <button className="startChat">Start Chat</button>
                 </div>
               </div>
 
@@ -406,6 +455,7 @@ class App extends Component {
                 <div className="details">
                     <p className="fullName">Full Name</p><span>Lisa</span>
                     <p className="idCard">ID Card</p><span>8546321</span>
+                    <button className="startChat">Start Chat</button>
                 </div>
               </div>
 
@@ -457,6 +507,7 @@ class App extends Component {
                 <div className="details">
                     <p className="fullName">Full Name</p><span>Lisa</span>
                     <p className="idCard">ID Card</p><span>8546321</span>
+                    <button className="startChat">Start Chat</button>
                 </div>
               </div>
 
@@ -597,21 +648,31 @@ class App extends Component {
             <div className="rightIcons">
               <ul>
                 <li
-                  title="messages"
+                  title="Public messages"
                   className={isActive ? "toggle active" : "toggle"}
                   onClick={this.handleToggle}
                 >
                   {" "}
                   <BsChatRightTextFill />{" "}
                 </li>
+
+                <li
+                  title="Private messages"
+                  className={privateIsActive ? "privateToggle active" : "privateToggle"}
+                  onClick={() => this.handlePrivateIsActive(true, "")}
+                >
+                  {" "}
+                  <SiGooglechat />{" "}
+                </li>
               </ul>
             </div>
           </footer>
         </div>
-      </div>
       </div>
     );
   }
 }
 
 export default App;
+
+
