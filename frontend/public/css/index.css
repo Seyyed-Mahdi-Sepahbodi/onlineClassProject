@@ -22,30 +22,20 @@ body {
     height: 75%;
     display: flex;
     align-items: center;
+    flex-flow: row;
+    justify-items: center;
     padding: 10px;
-}
-
-.sharedScreen {
-    width: 100%;
-    color: rgb(112, 112, 112);
-    font-size: 2.2em;
-    text-align: center;
-    /* transition: all ease-in-out 0.5s; */
-}
-
-.sharedScreen.active {
-    width: 80%;
 }
 
 /* Message Panel Start */
 
 .messagesPanel {
-    opacity: 0%;
+    opacity: 100%;
     position: absolute;
     right: 10px;
     display: block;
     width: 20%;
-    height: 80%;
+    height: 90%;
     margin-bottom: 20px;
     color: rgb(112, 112, 112);
     background-color: white;
@@ -53,9 +43,6 @@ body {
     /* transition: all ease-in-out 0.2s; */
 }
 
-.messagesPanel.active {
-    opacity: 100%;
-}
 
 .messagesPanel .messagesHeader {
     opacity: 0.5;
@@ -132,179 +119,12 @@ body {
     margin-right: 5%;
 }
 
-    /*****************************************/
-    /*****************************************/
-    /*****************************************/
-    /*****************************************/
-
-    /* Private Message Panel Start */
-
-    /*****************************************/
-    /*****************************************/
-    /*****************************************/
-    /*****************************************/
-    
-.privateMessagesPanel {
-    opacity: 100%;
-    position: absolute;
-    right: 10px;
-    display: block;
-    width: 20%;
-    height: 80%;
-    margin-bottom: 20px;
-    color: rgb(112, 112, 112);
-    background-color: white;
-    border-radius: 15%;
-    /* transition: all ease-in-out 1.5s; */
-    text-align: center;
-}
-
-.privateMessagesPanel.active {
-    opacity: 100%;
-}
-
-.private-messagesHeader {
-    opacity: 0.5;
-    font-size: 20px;
-    text-align: center;
-    margin: auto;
-}
-
-.show-persons {
-    height: 70%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    margin-top: 30px;
-}
-
-.show-persons > ul > li {
-    display: flex;
-    margin-top: 10px;
-    justify-content: space-around;
-    align-items: center;
-    border: 1px dashed #140E0E;
-    margin-right: 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all ease-in-out 0.2s;
-}
-
-.show-persons > ul > li:hover {
-    background-color: #b4b0b0;
-}
-
-.show-persons > ul > li > img {
-    width:50px ;
-    height: 50px;
-    border-radius: 50%;
-}
-
-.show-persons > ul > li > h4 {
-    color: #140E0E;
-    /* Main color => color: rgb(112, 112, 112); */
-}
-
-.show-persons > ul > li > span {
-    color: white;
-    border: 1px solid red;
-    border-radius:50% ;
-    padding: 0 5px;
-    background-color: red;
-    transition: all ease-in-out 0.2s;
-}
-
-.show-persons > ul > li > span:hover {
-    background-color: purple;
-    color: black;
-    border-color: purple;
-}
-
-.chat-page {
-    margin-top: 10px;
-    position: relative;
-    height: 70%;
-}
-
-.chat-messages {
-    overflow-y: auto;
-    height: 70%;
-}
-
-.chat-messages > p {
-    padding: 5px 10px;
-    color: black;
-    border-radius: 20px;
-}
-
-.chat-messages > .chat-messages-me {
-    text-align: right;
-    background-color: purple;
-    margin:5px 2px 0 auto;
-    width: 90%;
-}
-
-.chat-messages > .chat-messages-other {
-    text-align: left;
-    background-color: #707070;
-    margin:8px auto 0 2px;
-    width: 90%;
-}
-
-.title-chat-page {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.title-chat-page > .return-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #c0bebe;
-    border-radius: 50%;
-    padding: 5px;
-    font-size: 20px;
-    transition: all ease-in-out 0.2s;
-}
-
-.title-chat-page > .return-arrow:hover {
-    background-color: #707070;
-    color: white;
-}
-
-
-.privateMessagesPanel > .typeBox {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border: 1px solid #707070;
-    border-radius: 20px;
-    width: 90%;
-    height: 10%;
-    margin: auto;
-    margin-top: 20px;
-}
-
-
-    /*****************************************/
-    /*****************************************/
-    /*****************************************/
-    /*****************************************/
-
-
-    /* Private Messages Panel End    */ 
-
-    /*****************************************/
-    /*****************************************/
-    /*****************************************/
-    /*****************************************/
-
 /* Users */
 
 .users {
     position: absolute;
     width: 95%;
-    min-height: 20%;
+    min-height: 17%;
     bottom: 60px;
     margin: 0 auto;
     overflow-x: scroll;
@@ -324,6 +144,7 @@ body {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
     padding: 8px 80px;
     margin-left: 10px;
+    margin-bottom: 10px;
     cursor: pointer;
     background-color: #140E0E;
     border-radius: 5%;
@@ -568,6 +389,12 @@ footer > .rightIcons > ul > li {
     right: 2%;
     top: 75%;
     color: white;
+}
+
+.survey.active {
+    background-color: purple;
+    color: black;
+    border-color: purple;
 }
 
 

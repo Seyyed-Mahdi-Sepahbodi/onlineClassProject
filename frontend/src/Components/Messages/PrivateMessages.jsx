@@ -1,11 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
 
+
 import { TiArrowRightThick } from 'react-icons/ti'
 
-const PrivateMessages = ({chat, name, messages}) => {
+const PrivateMessages = ({stateChat, name, messages}) => {
+  
 
-  const [handleChat, setChat] = useState(chat)
+  const [handleChat, setChat] = useState(stateChat)
   // const [Name, setName] = useState(name)
   // const [Messages, setMessages] = useState(messages) /* messages are array */
 
@@ -49,7 +51,7 @@ const PrivateMessages = ({chat, name, messages}) => {
           <div className='chat-page'>
                   <div className='title-chat-page'>
                     <img alt='john' src='/img/girl.jpg' style={{width:"60px", height:"60px", borderRadius:"50%"}}/>
-                    <h4>john</h4>
+                    <h4>{name}</h4>
                     <i className="return-arrow" onClick={() => setChat(handleChat => !handleChat)} style={{cursor:"pointer"}}><TiArrowRightThick /></i>
                   </div>
                   <hr />
