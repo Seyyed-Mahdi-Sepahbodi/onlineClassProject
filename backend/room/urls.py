@@ -16,6 +16,7 @@ urlpatterns = [
     path('api/message_list/<int:room_id>/', views.RoomMessageListAPIView.as_view(), name='messages_list'),
     path('api/send_message/', views.AddMessageAPIView.as_view(), name='add_message'),
     path('api/send_private_message/', views.AddPrivateMessageAPIView.as_view(), name='add_private_message'),
+    path('api/show_private_message/<int:user_id>/<int:receiver_id>/', views.ShowPrivateMessageAPIView.as_view(), name='show_private_message'),
 
     # paths
     path('', views.lobby, name='room_lobby'),

@@ -19,7 +19,8 @@ from .serializers import (RoomMicrophoneUpdateSerializer,
                           RoomDetailSerializer,
                           RoomMessageListSerializer,
                           AddMessageSerializer,
-                          AddPrivateMessageSerializer)
+                          AddPrivateMessageSerializer,
+                          ShowPrivateMessageSerializer)
 
 # Create your views here.
 
@@ -207,6 +208,20 @@ class AddMessageAPIView(CreateAPIView):
 class AddPrivateMessageAPIView(CreateAPIView):
     serializer_class = AddPrivateMessageSerializer
     queryset = models.Messages.objects.all()
+
+
+class ShowPrivateMessageAPIView(ListAPIView):
+    serializer_class = ShowPrivateMessageSerializer
+    lookup_url_kwarg = "user_id"
+    lookup_url_kwarg_2 = "receiver_id"
+
+    def get_queryset(self, *args, **kwargs):
+        user_id = self.kwargs.get(self.lookup_url_kwarg)
+        receiver_id = self.kwargs.get(self.lookup_url_kwarg_2)
+        messages = models.Messages.objects.filter(room=user_id, receiver=receiver_id)
+        return messages
+
+    
 
 
 def lobby(request):

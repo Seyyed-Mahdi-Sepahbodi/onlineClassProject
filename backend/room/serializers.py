@@ -98,4 +98,11 @@ class AddPrivateMessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Messages
-        fields = ['user', 'receiver', 'room', 'content',]
+        fields = ['user', 'receiver', 'room', 'content']
+
+
+class ShowPrivateMessageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Messages
+        fields = ['user', 'receiver', 'room', 'content']
