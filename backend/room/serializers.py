@@ -2,7 +2,7 @@ from rest_framework import serializers
 from accounts.models import ContributorUsers
 from django.contrib.auth import get_user_model
 from panel.models import *
-
+from room.models import *
 
 User = get_user_model()
 
@@ -105,4 +105,18 @@ class ShowPrivateMessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Messages
-        fields = ['user', 'receiver', 'room', 'content']
+        fields = ['user', 'receiver', 'room', 'content', 'created_at']
+
+
+class ShowPrivateChatsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Messages
+        fields = ['user', 'receiver']
+
+
+class CreatePollSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Vote
+        fields = '__all__'

@@ -69,9 +69,17 @@ class Files(models.Model):
     def __str__(self):
         return f"File '{self.title}' uploaded by '{self.user.full_name()}'"
 
+
 class Messages(models.Model):
+    NORMAL = 'NRM'
+    REMOVED = 'RMV'
+    MESSAGE_STATUS_CHOICES = [
+        (NORMAL, 'عادی'),
+        (REMOVED, 'حذف شده'),
+    ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='message_user', verbose_name='کاربر')
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='message_receiver', null=True, blank=True, verbose_name='گیرنده')
+    status = models.CharField(max_length=3, choices=MESSAGE_STATUS_CHOICES, default=NORMAL, verbose_name='وضعیت')
     room = models.ForeignKey(Rooms, on_delete=models.CASCADE, related_name='message_room', verbose_name='اتاق')
     content = models.CharField(max_length=1000, verbose_name='محتوا')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ایجاد')
@@ -103,5 +111,3 @@ class ContributorRoom(models.Model):
 
     def __str__(self):
         return f"'{self.user.user.full_name()}' user in room '{self.room.title}'"
-
-    

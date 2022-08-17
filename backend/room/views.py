@@ -5,9 +5,12 @@ from accounts.models import ContributorUsers
 from agora_token_builder import RtcTokenBuilder
 from django.http import JsonResponse
 from django.shortcuts import render
-from panel import models
+from panel.models import *
 from rest_framework.generics import ListAPIView, UpdateAPIView, RetrieveAPIView, CreateAPIView
+from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.db.models.query import QuerySet
+from room.models import *
 
 from .serializers import (RoomMicrophoneUpdateSerializer,
                           RoomScreenUpdateSerializer,
@@ -20,7 +23,9 @@ from .serializers import (RoomMicrophoneUpdateSerializer,
                           RoomMessageListSerializer,
                           AddMessageSerializer,
                           AddPrivateMessageSerializer,
-                          ShowPrivateMessageSerializer)
+                          ShowPrivateMessageSerializer,
+                          ShowPrivateChatsSerializer,
+                          CreatePollSerializer)
 
 # Create your views here.
 
@@ -45,8 +50,8 @@ class RoomsUsersListAPIView(ListAPIView):
 
     def get_queryset(self):
         room_id = self.kwargs.get(self.lookup_url_kwarg)
-        room = models.Rooms.objects.get(id=room_id)
-        contributor_room = models.ContributorRoom.objects.filter(room=room)
+        room = Rooms.objects.get(id=room_id)
+        contributor_room = ContributorRoom.objects.filter(room=room)
         users = []
         for record in contributor_room:
             users.append(record.user)
@@ -120,18 +125,18 @@ class ChangeUserScreenStatusAPIView(UpdateAPIView):
 
 
 class RoomDetailAPIView(RetrieveAPIView):
-    queryset = models.Rooms.objects.all()
+    queryset = Rooms.objects.all()
     serializer_class = RoomDetailSerializer
 
 
 class ChangeRoomMicrophoneStatusAPIView(UpdateAPIView):
-    queryset = models.Rooms.objects.all()
+    queryset = Rooms.objects.all()
     serializer_class = RoomMicrophoneUpdateSerializer
     lookup_field = "room_id"
     
     def update(self, request, *args, **kwargs):
         room_id = kwargs['room_id']
-        room = models.Rooms.objects.get(id=room_id)
+        room = Rooms.objects.get(id=room_id)
         serializer = self.get_serializer(room, data=request.data, partial=True)     
         if serializer.is_valid():
             if len(request.data) == 0:
@@ -146,13 +151,13 @@ class ChangeRoomMicrophoneStatusAPIView(UpdateAPIView):
 
 
 class ChangeRoomWebCamStatusAPIView(UpdateAPIView):
-    queryset = models.Rooms.objects.all()
+    queryset = Rooms.objects.all()
     serializer_class = RoomWebCamUpdateSerializer
     lookup_field = "room_id"
     
     def update(self, request, *args, **kwargs):
         room_id = kwargs['room_id']
-        room = models.Rooms.objects.get(id=room_id)
+        room = Rooms.objects.get(id=room_id)
         serializer = self.get_serializer(room, data=request.data, partial=True)     
         if serializer.is_valid():
             if len(request.data) == 0:
@@ -167,13 +172,13 @@ class ChangeRoomWebCamStatusAPIView(UpdateAPIView):
 
 
 class ChangeRoomScreenStatusAPIView(UpdateAPIView):
-    queryset = models.Rooms.objects.all()
+    queryset = Rooms.objects.all()
     serializer_class = RoomScreenUpdateSerializer
     lookup_field = "room_id"
     
     def update(self, request, *args, **kwargs):
         room_id = kwargs['room_id']
-        room = models.Rooms.objects.get(id=room_id)
+        room = Rooms.objects.get(id=room_id)
         serializer = self.get_serializer(room, data=request.data, partial=True)     
         if serializer.is_valid():
             if len(request.data) == 0:
@@ -193,21 +198,19 @@ class RoomMessageListAPIView(ListAPIView):
 
     def get_queryset(self):
         room_id = self.kwargs.get(self.lookup_url_kwarg)
-        print(room_id)
-        room = models.Rooms.objects.get(id=room_id)
-        messages = models.Messages.objects.filter(room=room)
+        room = Rooms.objects.get(id=room_id)
+        messages = Messages.objects.filter(room=room)
         return messages
-    
 
 
 class AddMessageAPIView(CreateAPIView):
     serializer_class = AddMessageSerializer
-    queryset = models.Messages.objects.all()
+    queryset = Messages.objects.all()
 
 
 class AddPrivateMessageAPIView(CreateAPIView):
     serializer_class = AddPrivateMessageSerializer
-    queryset = models.Messages.objects.all()
+    queryset = Messages.objects.all()
 
 
 class ShowPrivateMessageAPIView(ListAPIView):
@@ -218,10 +221,34 @@ class ShowPrivateMessageAPIView(ListAPIView):
     def get_queryset(self, *args, **kwargs):
         user_id = self.kwargs.get(self.lookup_url_kwarg)
         receiver_id = self.kwargs.get(self.lookup_url_kwarg_2)
-        messages = models.Messages.objects.filter(room=user_id, receiver=receiver_id)
+        messages = Messages.objects.filter(room=user_id, receiver=receiver_id)
         return messages
 
+
+class ShowPrivateChatsAPIView(ListAPIView):
+    serializer_class = ShowPrivateChatsSerializer
+    lookup_url_kwarg = "user_id"
     
+    def get_queryset(self):
+        user_id = self.kwargs.get(self.lookup_url_kwarg)
+        # query = models.Messages.objects.filter(user=user_id).query
+        # print(query)
+        # query.group_by = ['receiver']
+        # print(query)
+        # results = QuerySet(query=query, model=models.Messages)
+        # print(results)
+        # results = models.Messages.objects.filter(user=user_id).distinct('receiver')
+        results = Messages.objects.filter(user=user_id)
+        return results
+
+
+class DeleteMessagesAPIView(APIView):
+    pass
+
+
+class CreatePollAPIView(CreateAPIView):
+    serializer_class = CreatePollSerializer
+    queryset = Vote.objects.all()
 
 
 def lobby(request):
@@ -229,4 +256,3 @@ def lobby(request):
 
 def room(request):
     return render(request, 'room/room.html')
-    
