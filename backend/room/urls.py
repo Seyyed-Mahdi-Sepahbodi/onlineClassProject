@@ -20,6 +20,7 @@ urlpatterns = [
     path('api/show_private_chats/<int:user_id>/', views.ShowPrivateChatsAPIView.as_view(), name='show_private_chats'),
     path('api/delete_all_messages/<int:room_id>/', views.DeleteMessagesAPIView.as_view(), name='delete_all_messages'),
     path('api/create_poll/', views.CreatePollAPIView.as_view(), name='create_poll'),
+    path('api/create_choice/', views.CreateChoiceAPIView.as_view(), name='create_choice'),
 
     # paths
     path('', views.lobby, name='room_lobby'),

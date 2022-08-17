@@ -120,3 +120,10 @@ class CreatePollSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vote
         fields = '__all__'
+
+
+class CreateChoiceSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Choice
+        fields = '__all__'

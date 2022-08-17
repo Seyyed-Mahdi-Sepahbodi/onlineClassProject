@@ -25,7 +25,8 @@ from .serializers import (RoomMicrophoneUpdateSerializer,
                           AddPrivateMessageSerializer,
                           ShowPrivateMessageSerializer,
                           ShowPrivateChatsSerializer,
-                          CreatePollSerializer)
+                          CreatePollSerializer,
+                          CreateChoiceSerializer)
 
 # Create your views here.
 
@@ -249,6 +250,11 @@ class DeleteMessagesAPIView(APIView):
 class CreatePollAPIView(CreateAPIView):
     serializer_class = CreatePollSerializer
     queryset = Vote.objects.all()
+
+
+class CreateChoiceAPIView(CreateAPIView):
+    serializer_class = CreateChoiceSerializer
+    queryset = Choice.objects.all()
 
 
 def lobby(request):
