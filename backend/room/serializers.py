@@ -51,13 +51,44 @@ class UserScreenUpdateSerializer(serializers.ModelSerializer):
         model = User
         fields = ['screen']
 
-    
 
-
-class ContributorUserMicrophonUpdateSerializer(serializers.ModelSerializer):
-
-    user = UserMicrophoneUpdateSerializer(read_only=True)
+class RoomDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = ContributorUsers
-        field = ['user']
+        model = Rooms
+        fields = ['organizer', 'title', 'automatic_ending', 'duration', 'webcam', 'microphone', 'screen', 'users_count', 'files_count']
+
+
+class RoomMicrophoneUpdateSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Rooms
+        fields = ['microphone']
+
+
+class RoomWebCamUpdateSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Rooms
+        fields = ['webcam']
+
+
+class RoomScreenUpdateSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Rooms
+        fields = ['screen']
+
+
+class RoomMessageListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Messages
+        fields = ['user', 'content', 'created_at']
+
+
+class AddMessageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Messages
+        fields = ['user', 'room', 'content']

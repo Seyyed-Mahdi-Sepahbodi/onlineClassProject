@@ -1,15 +1,27 @@
-from django.shortcuts import render
-from .serializers import UserDetailSerializer, UserMicrophoneUpdateSerializer, UserWebCamUpdateSerializer, UserScreenUpdateSerializer
-from rest_framework.generics import ListAPIView, UpdateAPIView
-from accounts.models import ContributorUsers
-from panel import models
-from agora_token_builder import RtcTokenBuilder
-from django.http import JsonResponse
-from rest_framework.response import Response
 import random
 import time
 
+from accounts.models import ContributorUsers
+from agora_token_builder import RtcTokenBuilder
+from django.http import JsonResponse
+from django.shortcuts import render
+from panel import models
+from rest_framework.generics import ListAPIView, UpdateAPIView, RetrieveAPIView, CreateAPIView
+from rest_framework.response import Response
+
+from .serializers import (RoomMicrophoneUpdateSerializer,
+                          RoomScreenUpdateSerializer,
+                          RoomWebCamUpdateSerializer, 
+                          UserDetailSerializer,
+                          UserMicrophoneUpdateSerializer,
+                          UserScreenUpdateSerializer,
+                          UserWebCamUpdateSerializer,
+                          RoomDetailSerializer,
+                          RoomMessageListSerializer,
+                          AddMessageSerializer)
+
 # Create your views here.
+
 
 def getToken(request):
     appId = 'a5037e50b65946fb9a1e60ea134901be'
@@ -23,6 +35,7 @@ def getToken(request):
 
     token = RtcTokenBuilder.buildTokenWithUid(appId, appCertificate, channelName, uid, role, privilegeExpiredTs)
     return JsonResponse({'token':token, 'uid':uid}, safe=False)
+
 
 class RoomsUsersListAPIView(ListAPIView):
     serializer_class = UserDetailSerializer
@@ -45,7 +58,7 @@ class ChangeUserMicrophoneStatusAPIView(UpdateAPIView):
     
     def update(self, request, *args, **kwargs):
         contributor_user_id = kwargs['user_id']
-        contributor_user = models.ContributorUsers.objects.get(id=contributor_user_id)
+        contributor_user = ContributorUsers.objects.get(id=contributor_user_id)
         user = contributor_user.user
         serializer = self.get_serializer(user, data=request.data, partial=True)     
         if serializer.is_valid():
@@ -67,7 +80,7 @@ class ChangeUserWebCamStatusAPIView(UpdateAPIView):
     
     def update(self, request, *args, **kwargs):
         contributor_user_id = kwargs['user_id']
-        contributor_user = models.ContributorUsers.objects.get(id=contributor_user_id)
+        contributor_user = ContributorUsers.objects.get(id=contributor_user_id)
         user = contributor_user.user
         serializer = self.get_serializer(user, data=request.data, partial=True)     
         if serializer.is_valid():
@@ -89,7 +102,7 @@ class ChangeUserScreenStatusAPIView(UpdateAPIView):
     
     def update(self, request, *args, **kwargs):
         contributor_user_id = kwargs['user_id']
-        contributor_user = models.ContributorUsers.objects.get(id=contributor_user_id)
+        contributor_user = ContributorUsers.objects.get(id=contributor_user_id)
         user = contributor_user.user
         serializer = self.get_serializer(user, data=request.data, partial=True)     
         if serializer.is_valid():
@@ -102,6 +115,93 @@ class ChangeUserScreenStatusAPIView(UpdateAPIView):
                 return Response({"message": "user share screen status changed."})
         else:
             return Response({"message": "failed", "details": serializer.errors})
+
+
+class RoomDetailAPIView(RetrieveAPIView):
+    queryset = models.Rooms.objects.all()
+    serializer_class = RoomDetailSerializer
+
+
+class ChangeRoomMicrophoneStatusAPIView(UpdateAPIView):
+    queryset = models.Rooms.objects.all()
+    serializer_class = RoomMicrophoneUpdateSerializer
+    lookup_field = "room_id"
+    
+    def update(self, request, *args, **kwargs):
+        room_id = kwargs['room_id']
+        room = models.Rooms.objects.get(id=room_id)
+        serializer = self.get_serializer(room, data=request.data, partial=True)     
+        if serializer.is_valid():
+            if len(request.data) == 0:
+                room.microphone = False
+                room.save()
+                return Response({"message": "room microphone status changed."})
+            else:
+                serializer.save()
+                return Response({"message": "room microphone status changed."})
+        else:
+            return Response({"message": "failed", "details": serializer.errors})
+
+
+class ChangeRoomWebCamStatusAPIView(UpdateAPIView):
+    queryset = models.Rooms.objects.all()
+    serializer_class = RoomWebCamUpdateSerializer
+    lookup_field = "room_id"
+    
+    def update(self, request, *args, **kwargs):
+        room_id = kwargs['room_id']
+        room = models.Rooms.objects.get(id=room_id)
+        serializer = self.get_serializer(room, data=request.data, partial=True)     
+        if serializer.is_valid():
+            if len(request.data) == 0:
+                room.webcam = False
+                room.save()
+                return Response({"message": "room webcam status changed."})
+            else:
+                serializer.save()
+                return Response({"message": "room webcam status changed."})
+        else:
+            return Response({"message": "failed", "details": serializer.errors})
+
+
+class ChangeRoomScreenStatusAPIView(UpdateAPIView):
+    queryset = models.Rooms.objects.all()
+    serializer_class = RoomScreenUpdateSerializer
+    lookup_field = "room_id"
+    
+    def update(self, request, *args, **kwargs):
+        room_id = kwargs['room_id']
+        room = models.Rooms.objects.get(id=room_id)
+        serializer = self.get_serializer(room, data=request.data, partial=True)     
+        if serializer.is_valid():
+            if len(request.data) == 0:
+                room.screen = False
+                room.save()
+                return Response({"message": "room share screen status changed."})
+            else:
+                serializer.save()
+                return Response({"message": "room share screen status changed."})
+        else:
+            return Response({"message": "failed", "details": serializer.errors})
+
+
+class RoomMessageListAPIView(ListAPIView):
+    serializer_class = RoomMessageListSerializer
+    lookup_url_kwarg = "room_id"
+
+    def get_queryset(self):
+        room_id = self.kwargs.get(self.lookup_url_kwarg)
+        print(room_id)
+        room = models.Rooms.objects.get(id=room_id)
+        messages = models.Messages.objects.filter(room=room)
+        return messages
+    
+
+
+class AddMessageAPIView(CreateAPIView):
+    serializer_class = AddMessageSerializer
+    queryset = models.Messages.objects.all()
+
 
 
 def lobby(request):
