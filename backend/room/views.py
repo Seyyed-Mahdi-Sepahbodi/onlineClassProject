@@ -18,7 +18,8 @@ from .serializers import (RoomMicrophoneUpdateSerializer,
                           UserWebCamUpdateSerializer,
                           RoomDetailSerializer,
                           RoomMessageListSerializer,
-                          AddMessageSerializer)
+                          AddMessageSerializer,
+                          AddPrivateMessageSerializer)
 
 # Create your views here.
 
@@ -202,6 +203,10 @@ class AddMessageAPIView(CreateAPIView):
     serializer_class = AddMessageSerializer
     queryset = models.Messages.objects.all()
 
+
+class AddPrivateMessageAPIView(CreateAPIView):
+    serializer_class = AddPrivateMessageSerializer
+    queryset = models.Messages.objects.all()
 
 
 def lobby(request):

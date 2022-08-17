@@ -71,6 +71,7 @@ class Files(models.Model):
 
 class Messages(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='message_user', verbose_name='کاربر')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='message_receiver', null=True, blank=True, verbose_name='گیرنده')
     room = models.ForeignKey(Rooms, on_delete=models.CASCADE, related_name='message_room', verbose_name='اتاق')
     content = models.CharField(max_length=1000, verbose_name='محتوا')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ایجاد')
