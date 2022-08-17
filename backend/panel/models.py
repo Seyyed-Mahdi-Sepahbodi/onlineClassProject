@@ -23,6 +23,9 @@ class Rooms(models.Model):
     operator_first = models.BooleanField(default=True, verbose_name='بازگشایی با ورود اپراتور')
     automatic_ending = models.BooleanField(default=False, verbose_name='پایان خودکار')
     duration = models.IntegerField(default=0, verbose_name='مدت زمان')
+    microphone = models.BooleanField(default=False, verbose_name='میکروفون')
+    webcam = models.BooleanField(default=False, verbose_name='دوربین')
+    screen = models.BooleanField(default=False, verbose_name='اشتراک گذاری صفحه')
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     class Meta:
