@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from .serializers import UserDetailSerializer
+from .serializers import UserDetailSerializer, UserMicrophoneUpdateSerializer, UserWebCamUpdateSerializer, UserScreenUpdateSerializer
 from rest_framework.generics import ListAPIView, UpdateAPIView
 from accounts.models import ContributorUsers
 from panel import models
 from agora_token_builder import RtcTokenBuilder
 from django.http import JsonResponse
+from rest_framework.response import Response
 import random
 import time
 
@@ -35,10 +36,73 @@ class RoomsUsersListAPIView(ListAPIView):
         for record in contributor_room:
             users.append(record.user)
         return users
-
+ 
 
 class ChangeUserMicrophoneStatusAPIView(UpdateAPIView):
-    pass
+    queryset = ContributorUsers.objects.all()
+    serializer_class = UserMicrophoneUpdateSerializer
+    lookup_field = "user_id"
+    
+    def update(self, request, *args, **kwargs):
+        contributor_user_id = kwargs['user_id']
+        contributor_user = models.ContributorUsers.objects.get(id=contributor_user_id)
+        user = contributor_user.user
+        serializer = self.get_serializer(user, data=request.data, partial=True)     
+        if serializer.is_valid():
+            if len(request.data) == 0:
+                user.microphone = False
+                user.save()
+                return Response({"message": "user microphone status changed."})
+            else:
+                serializer.save()
+                return Response({"message": "user microphone status changed."})
+        else:
+            return Response({"message": "failed", "details": serializer.errors})
+
+
+class ChangeUserWebCamStatusAPIView(UpdateAPIView):
+    queryset = ContributorUsers.objects.all()
+    serializer_class = UserWebCamUpdateSerializer
+    lookup_field = "user_id"
+    
+    def update(self, request, *args, **kwargs):
+        contributor_user_id = kwargs['user_id']
+        contributor_user = models.ContributorUsers.objects.get(id=contributor_user_id)
+        user = contributor_user.user
+        serializer = self.get_serializer(user, data=request.data, partial=True)     
+        if serializer.is_valid():
+            if len(request.data) == 0:
+                user.webcam = False
+                user.save()
+                return Response({"message": "user webcam status changed."})
+            else:
+                serializer.save()
+                return Response({"message": "user webcam status changed."})
+        else:
+            return Response({"message": "failed", "details": serializer.errors})
+
+
+class ChangeUserScreenStatusAPIView(UpdateAPIView):
+    queryset = ContributorUsers.objects.all()
+    serializer_class = UserScreenUpdateSerializer
+    lookup_field = "user_id"
+    
+    def update(self, request, *args, **kwargs):
+        contributor_user_id = kwargs['user_id']
+        contributor_user = models.ContributorUsers.objects.get(id=contributor_user_id)
+        user = contributor_user.user
+        serializer = self.get_serializer(user, data=request.data, partial=True)     
+        if serializer.is_valid():
+            if len(request.data) == 0:
+                user.screen = False
+                user.save()
+                return Response({"message": "user share screen status changed."})
+            else:
+                serializer.save()
+                return Response({"message": "user share screen status changed."})
+        else:
+            return Response({"message": "failed", "details": serializer.errors})
+
 
 def lobby(request):
     return render(request, 'room/lobby.html')

@@ -38,6 +38,22 @@ class UserMicrophoneUpdateSerializer(serializers.ModelSerializer):
         fields = ['microphone']
 
 
+class UserWebCamUpdateSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = User
+        fields = ['webcam']
+
+
+class UserScreenUpdateSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = User
+        fields = ['screen']
+
+    
+
+
 class ContributorUserMicrophonUpdateSerializer(serializers.ModelSerializer):
 
     user = UserMicrophoneUpdateSerializer(read_only=True)

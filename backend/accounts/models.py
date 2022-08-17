@@ -23,7 +23,7 @@ class CustomUsers(AbstractUser):
         choices=USER_GENDER_CHOICES,
         default=UNDEFINED,
         verbose_name='جنسیت'
-    )
+    ) 
     avatar = models.ImageField(upload_to='avatar/', null=True, blank=True, verbose_name='آواتار')
     webcam = models.BooleanField(default=False, verbose_name='اتصال دوربین')
     microphone = models.BooleanField(default=False, verbose_name='اتصال میکروفون')
