@@ -12,21 +12,7 @@ from rest_framework.response import Response
 from django.db.models.query import QuerySet
 from room.models import *
 
-from .serializers import (RoomMicrophoneUpdateSerializer,
-                          RoomScreenUpdateSerializer,
-                          RoomWebCamUpdateSerializer, 
-                          UserDetailSerializer,
-                          UserMicrophoneUpdateSerializer,
-                          UserScreenUpdateSerializer,
-                          UserWebCamUpdateSerializer,
-                          RoomDetailSerializer,
-                          RoomMessageListSerializer,
-                          AddMessageSerializer,
-                          AddPrivateMessageSerializer,
-                          ShowPrivateMessageSerializer,
-                          ShowPrivateChatsSerializer,
-                          CreatePollSerializer,
-                          CreateChoiceSerializer)
+from .serializers import *
 
 # Create your views here.
 
@@ -255,6 +241,27 @@ class CreatePollAPIView(CreateAPIView):
 class CreateChoiceAPIView(CreateAPIView):
     serializer_class = CreateChoiceSerializer
     queryset = Choice.objects.all()
+
+
+class RoomPollsListAPIView(ListAPIView):
+    serializer_class = RoomPollsListSerializer
+    lookup_url_kwarg = "room_id"
+
+    def get_queryset(self):
+        room_id = self.kwargs.get(self.lookup_url_kwarg)
+        polls = Vote.objects.filter(room=room_id)
+        return polls
+    
+
+class PollChoicesAPIView(ListAPIView):
+    serializer_class = PollChoicesSerializer
+    lookup_url_kwarg = "poll_id"
+
+    def get_queryset(self):
+        poll_id = self.kwargs.get(self.lookup_url_kwarg)
+        choices = Choice.objects.filter(vote=poll_id)
+        return choices
+    
 
 
 def lobby(request):
