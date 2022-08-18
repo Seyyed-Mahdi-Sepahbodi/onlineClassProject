@@ -30,10 +30,9 @@ urlpatterns = [
     # poll APIs
     path('api/polls/<int:room_id>/', views.RoomPollsListAPIView.as_view(), name='room_polls'),
     path('api/choices/<int:poll_id>/', views.PollChoicesAPIView.as_view(), name='poll_choices'),
-    # path('api/show_poll/<int:poll_id>/', views.ShowPollAPIView.as_view(), name='show_poll'),
     path('api/create_poll/', views.CreatePollAPIView.as_view(), name='create_poll'),
     path('api/create_choice/', views.CreateChoiceAPIView.as_view(), name='create_choice'),
-    path('api/close_poll/', views.ClosePollAPIView.as_view(), name='close_poll'),
+    path('api/close_poll/<int:poll_id>/', views.ClosePollAPIView.as_view(), name='close_poll'),
 
     # paths
     path('', views.lobby, name='room_lobby'),

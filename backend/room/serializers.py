@@ -141,3 +141,10 @@ class PollChoicesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Choice
         fields = '__all__'
+
+
+class ClosePollSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Vote
+        fields = ['status']

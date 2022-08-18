@@ -263,6 +263,25 @@ class PollChoicesAPIView(ListAPIView):
         return choices
     
 
+class ClosePollAPIView(UpdateAPIView):
+    queryset = Vote.objects.all()
+    serializer_class = ClosePollSerializer
+    lookup_field = "poll_id"
+
+    def update(self, request, *args, **kwargs):
+        poll_id = kwargs['poll_id']
+        poll = Vote.objects.get(id=poll_id)
+        serializer = self.get_serializer(room, data=request.data, partial=True)     
+        if serializer.is_valid():
+            if len(request.data) == 0:
+                poll.status = False
+                poll.save()
+                return Response({"message": "poll has been closed."})
+            else:
+                return Response({"message": "failed", "details": "Invalid input."})
+        else:
+            return Response({"message": "failed", "details": serializer.errors})
+
 
 def lobby(request):
     return render(request, 'room/lobby.html')
