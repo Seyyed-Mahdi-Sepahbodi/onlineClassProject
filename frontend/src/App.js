@@ -1,108 +1,88 @@
-import { React } from 'react';
+import { React, useState } from "react";
 
-function App() {
-  return(
-    <div>
-    <div class="room">
-        <div class="middleContent">
-            <div class="sharedScreen">Shared Screen</div>
-            <div class="messagesPanel">
-                <h3 class="messagesHeader">messages</h3>
-                <div class="messages">
-                    <ul>
-                        <li>
-                            <p>hello everybody</p>
-                            <span>john</span>
-                        </li>
-                        <li>
-                            <p>hello</p>
-                            <span>lisa</span>
-                        </li>
-                        <li>
-                            <p>i wanna ask a question from master ... </p>
-                            <span>mike smith</span>
-                        </li>
-                        <li>
-                            <p>yes mike ask!</p>
-                            <span>master</span>
-                        </li>
-                        <li>
-                            <p>how can i have a lot money ?</p>
-                            <span>mike smith</span>
-                        </li>
-                        <li>
-                            <p>this is easy mike!!</p>
-                            <span>master</span>
-                        </li>
-                        <li>
-                            <p>Choose a job where someone has made a lot of money at this ...</p>
-                            <span>master</span>
-                        </li>
-                        <li>
-                            <p>and so so try to be a master in this</p>
-                            <span>master</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="typeBox">
-                    <p>Type here</p>
-                    <span>icon</span>
-                </div>
-            </div>
+import PrivateMessages from './Components/Messages/PrivateMessages';
+import Cards from './Components/Cards/Cards';
+import PublicMessages from './Components/Messages/PublicMessages';
+import FooterComponent from './Components/Footer/FooterComponent';
+import SharedScreen from './Components/SharedScreen/SharedScreen';
+import Survey from './Components/Survey/Survey';
+
+
+
+const App = () => {
+
+
+  /* Footer Right icons */
+  const [stateChat, setStateChat] = useState(false);
+  const [name, setName] = useState('');
+  const [isActive, setIsActive] = useState(false);
+  const [pvCardActive, setPvCardActive] = useState(false);
+  const [pvFooterActive, setPvFooterActive] = useState(false);
+
+  /* Footer Middle icons */
+  const [micActive, setMicActive] = useState(false);
+  const [webcamActive, setWebcamActive] = useState(false);
+  const [raiseHandActive, setRaiseHandActive] = useState(false);
+  const [screenShareActive, setScreenShareActive] = useState(false);
+  const [surveyActive, setSurvayActive] = useState(false);
+ 
+  
+
+  let Messages = [];
+
+  return (
+      <div>
+        <div className="room">
+          {surveyActive ? <Survey/> : null}
+          
+          <div className="middleContent">
+
+            <SharedScreen IA={isActive} PIA={(pvFooterActive || pvCardActive)} />
+            
+            {isActive ? <PublicMessages /> : null}
+
+            {pvCardActive ? <PrivateMessages stateChat={stateChat} name={name} messages={Messages} /> : null}
+            {pvFooterActive ? <PrivateMessages stateChat={stateChat} name={name} messages={Messages} /> : null}
+
+
+          </div>
+          
+          <Cards 
+            setStateChat={setStateChat}
+            setName={setName} 
+            setPvCardActive={setPvCardActive}
+            setPvFooterActive={setPvFooterActive}
+            setIsActive={setIsActive}
+            isActive={isActive}
+            mic={micActive}
+            webcam={webcamActive}
+            raiseHand={raiseHandActive}
+            shareScreen={screenShareActive}
+            pvFooterActive={pvFooterActive}
+            pvCardActive={pvCardActive} />
+
+          <span className="underline"></span>
+
+          <FooterComponent 
+            setStateChat={setStateChat}
+            setMicActive={setMicActive}
+            setWebcamActive={setWebcamActive}
+            setRaiseHandActive={setRaiseHandActive}
+            setScreenShareActive={setScreenShareActive}
+            setSurvayActive={setSurvayActive}
+            setIsActive={setIsActive}
+            setPvFooterActive={setPvFooterActive}
+            setPvCardActive={setPvCardActive}
+            isActive={isActive}
+            pvCardActive={pvCardActive}
+            pvFooterActive={pvFooterActive}  />
+          
         </div>
-        <div class="users">
-            <div class="boxes">
-                <ul>
-                    <li>
-                        <div class="circle">
-                            <img alt="img" src="/img/girl.jpg" />
-                        </div>
-                        <p>lisa</p>
-                    </li>
-                    <li>
-                        <div class="circle">
-                            <img alt="img" src="img/img1.jpg" />
-                        </div>
-                        <p>john</p>
-                    </li>
-                    <li>
-                        <div class="circle">
-                            <img alt="img" src="img/img2.jpg" />
-                        </div>
-                        <p>john</p>
-                    </li>
-                    <li>
-                        <div class="circle"><img alt="img" src="img/img3.jpg" /></div><p>john</p>
-                    </li>
-                    <li>
-                        <div class="circle"><img alt="img" src="img/img5.jpg" /></div><p>john</p>
-                    </li>
-                    <li>
-                        <div class="circle"><img alt="img" src="img/img6.jpg" /></div><p>john</p>
-                    </li>
-                    <li>
-                        <div class="circle"><img alt="img" src="img/img7.jpg" /></div><p>john</p>
-                    </li>
-                    <li>
-                        <div class="circle"><img alt="img" src="img/img8.jpg" /></div><p>john</p>
-                    </li>
-                    <li>
-                        <div class="circle"><img alt="img" src="img/img9.jpg" /></div><p>john</p>
-                    </li>
-                    <li>
-                        <div class="circle"><img alt="img" src="img/img1.jpg" /></div><p>john</p>
-                    </li>
-                    <li>
-                        <div class="circle"><img alt="img" src="img/girl.jpg" /></div><p>john</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <span class="underline"></span>
-        <div class="footerPanel"></div>
-    </div>
-  </div>
-  )
+      </div>
+    );
+  
 }
 
 export default App;
+
+

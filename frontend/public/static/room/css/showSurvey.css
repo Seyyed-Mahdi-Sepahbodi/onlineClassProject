@@ -1,0 +1,67 @@
+  /* SurveyPanel */
+
+  .form-popup {
+    display: block;
+    position: fixed;
+    top: 100px;
+    right: 40%;
+    border: 3px solid black;
+    z-index: 9;
+    width: 25%;
+  }
+  
+  /* Add styles to the form container */
+  .form-container {
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+  }
+
+  .option > ul {
+    display: flex;
+    flex-flow: column;
+    color: white;
+    list-style: none;
+  }
+
+  .option > ul > li {
+    padding: 5px;
+    border: 1px solid #707070;
+    margin: 5px;
+    font-size: 12px;
+    background-color: #2E2929;
+    cursor: pointer;
+    transition:all ease-in-out 0.2s;
+  }
+
+  .option > ul > li:hover {
+    border: 1px solid #2E2929;
+    background-color: #707070;
+    cursor: pointer;
+  }
+
+  /* Set a style for the submit/login button */
+  .form-container .sumbit-btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+  }
+
+   /* Add some hover effects to buttons */
+  .form-container .sumbit-btn:hover {
+    opacity: 1;
+    border-radius: 15px;
+  }
+
+  .form-container >p{
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size : 12px;
+  }

@@ -1,3 +1,4 @@
+
 * {
     box-sizing: border-box;
 }
@@ -9,6 +10,7 @@ body {
 }
 
 .room {
+    position: relative;
     background-color: rgb(39, 33, 33);
     width: 100%;
     height: 100vh;
@@ -17,20 +19,18 @@ body {
 .middleContent {
     position: relative;
     width: 100%;
-    height: 70%;
+    height: 75%;
     display: flex;
     align-items: center;
+    flex-flow: row;
+    justify-items: center;
     padding: 10px;
 }
 
-.sharedScreen {
-    width: 80%;
-    color: rgb(112, 112, 112);
-    font-size: 2.2em;
-    text-align: center;
-}
+/* Message Panel Start */
 
 .messagesPanel {
+    opacity: 100%;
     position: absolute;
     right: 10px;
     display: block;
@@ -40,8 +40,9 @@ body {
     color: rgb(112, 112, 112);
     background-color: white;
     border-radius: 15%;
-    transition: all 1s ease 0s;
+    /* transition: all ease-in-out 0.2s; */
 }
+
 
 .messagesPanel .messagesHeader {
     opacity: 0.5;
@@ -76,6 +77,8 @@ body {
     font-size: 0.9em;
     border-radius: 10px;
     padding: 2px 10px;
+    text-align: justify;
+    direction: ltr;
 }
 
 .messagesPanel .messages > ul > li > span {
@@ -94,7 +97,7 @@ body {
     height: 10%;
     bottom: 20px;
     right: 15px;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     border-width: 1px;
     border-style: solid;
@@ -109,9 +112,11 @@ body {
     align-self: center;
 }
 
-.messagesPanel .typeBox > span {
-    align-self: center;
-    padding-right: 5px;
+.messagesPanel .typeBox > img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 5%;
 }
 
 /* Users */
@@ -119,69 +124,307 @@ body {
 .users {
     position: absolute;
     width: 95%;
-    height: 20%;
-    bottom: 100px;
-    margin: auto;
+    min-height: 17%;
+    bottom: 60px;
+    margin: 0 auto;
+    overflow-x: scroll;
+    display: flex;
+    flex-direction: row;
+	flex-wrap: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
 
-.users .boxes {
-    width: 100%;
-    overflow-x: auto;
-    text-align: center;
-}
-
-.users .boxes > ul {
-    display: grid;
-    grid-template-columns: repeat(150, 1fr);
-    list-style: none;
-    gap: 30px;
-}
-
-.users .boxes > ul > li {
+.card {
     position: relative;
-    background-color: rgb(20, 14, 14);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 60px 90px;
+    max-width: 125px;
+    height: 100px;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
+    padding: 8px 80px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: #140E0E;
+    border-radius: 5%;
 }
 
-.users .boxes > ul > li .circle {
+.card:hover{
+    transform: rotateY(180deg);
+}
+
+.frontCard, .backCard {
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.frontCard {
     position: absolute;
-    display: flex;
-    text-align: center;
+    bottom: 0;
+    left: 0;
 }
 
-.users .boxes > ul > li > .circle > img {
+.frontCard .circle {
+    position: absolute;
+    right: 30%;
+    top: 18%;
+}
+
+.frontCard .circle > img {
     width: 65px;
     height: 65px;
     border-radius: 50%;
 }
 
-.users .boxes > ul > li > p {
+.frontCard > p {
     position: absolute;
-    bottom: -10px;
+    bottom: -15px;
     left: 0px;
     color: white;
     font-size: 12px;
+    padding: 5px;
 }
 
-.users .boxes > ul > li > p {
+
+.backCard {
     position: absolute;
-    bottom: -10px;
-    left: 0px;
+    display: flex;
+    flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    border-radius: 5%;
+    text-align: center;
+    overflow: hidden;
+    /* background-color: #2980b9; */
+    background-color: #272121;
     color: white;
-    font-size: 12px;
-}
-
-.underline {
-    position: absolute;
-    display: block;
+    transform: rotateY(180deg);
     width: 100%;
-    margin-top: 10px;
-    bottom: 50px;
-    border-width: 0.5px;
-    border-style: solid;
-    border-color: rgb(112, 112, 112);
-    border-image: initial;
 }
+
+.backCard .details {
+    position: absolute;
+    left: 30%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    
+}
+
+.backCard .details > p {
+    font-size: 13px;
+    color: black;
+}
+
+.backCard .details > span {
+    font-size: 15px;
+    font-weight: 800;
+    color: #DC1515;
+}
+
+.backCard .details .fullName {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
+.backCard .details .idCard {
+    margin: 0;
+    margin-top: 2px;
+}
+
+.startChat {
+    background-color: #140E0E;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+
+/* Footer */
+
+footer{
+    position: absolute;
+    display: flex;
+    height: 8%;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-end;
+    bottom: 0;
+    padding: 0 10px;
+}
+
+footer > p {
+    color: #707070;
+}
+
+footer > .middleIcons > ul {
+    display: flex;
+    color: white;
+    list-style: none;
+    margin-top: 15px;
+}
+
+footer > .middleIcons > ul > li {
+    padding: 5px 5px 0 5px;
+    border: 1px solid #707070;
+    border-radius: 50%;
+    margin:0 10px;
+    font-size: 18px;
+    background-color: #2E2929;
+    cursor: pointer;
+    transition:all ease-in-out 0.2s;
+}
+
+footer > .middleIcons > ul > li:hover{
+    background-color: purple;
+    color: black;
+    border-color: purple;
+}
+
+footer > .rightIcons > ul {
+    list-style: none;
+    display: flex;
+    direction: rtl;
+}
+
+footer > .rightIcons > ul > li {
+    color: rgb(219, 61, 61);
+    font-size: 25px;
+    padding: 5px 5px 0 5px;
+    margin-top: 5px;
+    border-right: 1px solid rgba(219, 61, 61, 0);
+    transition: all ease-in-out 0.2s;
+}
+
+.toggle {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.toggle.active{
+    border-right: 1px solid rgba(219, 61, 61, 100);
+}
+
+.privateToggle {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.privateToggle.active {
+    border-right: 1px solid rgba(219, 61, 61, 100);
+}
+
+/* Icons */
+
+.COut {
+    color: white;
+    background-color: red !important;
+}
+
+.COut:hover {
+    border-color: red !important;
+}
+
+/* User box icons */
+
+.IconUser {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.IconUser > ul {
+    margin: 0;
+    padding: 0;
+}
+
+.IconUser > ul > li {
+    margin: 0;
+    padding: 0;
+}
+
+.mic {
+    position: absolute;
+    display: block !important;
+    right: 2%;
+    top: 15%;
+    color: white;
+}
+
+.webcam {
+    position: absolute;
+    display: block !important;
+    right: 2%;
+    top: 35%;
+    color: white;
+}
+
+.shareScreen {
+    position: absolute;
+    display: block !important;
+    right: 2%;
+    top: 55%;
+    color: white;
+}
+
+.raiseHand {
+    position: absolute;
+    display: block !important;
+    right: 2%;
+    top: 75%;
+    color: white;
+}
+
+.survey.active {
+    background-color: purple;
+    color: black;
+    border-color: purple;
+}
+
+
+
+/* Scrollbar  */
+
+::-webkit-scrollbar {
+    height: 7px;
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  /* Scrollbar */
+  ::-webkit-scrollbar-thumb {
+    background: red; 
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:vertical {
+    background-color: grey !important;
+    border-radius: 10px;
+  }
+  
+  /* Scrollbar on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b30000; 
+    cursor: pointer;
+  }

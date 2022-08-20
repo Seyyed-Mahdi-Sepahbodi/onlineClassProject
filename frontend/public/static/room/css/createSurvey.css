@@ -1,0 +1,83 @@
+  /* SurveyPanel */
+
+  .form-popup {
+    display: block;
+    position: fixed;
+    top: 100px;
+    right: 40%;
+    border: 3px solid black;
+    z-index: 9;
+    width: 25%;
+  }
+  
+  /* Add styles to the form container */
+  .form-container {
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+  }
+  
+  /* Full-width input fields */
+  .form-container input[type=text]{
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #f1f1f1;
+  }
+
+  /* When the inputs get focus, do something */
+  .form-container input[type=text]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+
+  .remove-option {
+    display: flex;
+    justify-content: center;
+    margin: 5px 0 5px 0;
+  }
+
+  /* Set a style for the submit/login button */
+  .form-container .sumbit-btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+  }
+
+  .form-container .add-btn ,.remove-btn {
+    color: white;
+    padding: 16px 10px;
+    padding: 0%;
+    width: 30px;
+    height: 30px;
+    margin: 7px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-bottom:10px;
+    opacity: 0.8;
+  }
+
+  .form-container .add-btn {
+    background-color: black;
+  }
+
+  .form-container .remove-btn {
+    background-color: red;
+  }
+
+   /* Add some hover effects to buttons */
+   .form-container .add-btn:hover,.remove-btn:hover {
+    opacity: 1;
+    border-radius: 0px;
+  }
+  .form-container .sumbit-btn:hover {
+    opacity: 1;
+    border-radius: 15px;
+  }

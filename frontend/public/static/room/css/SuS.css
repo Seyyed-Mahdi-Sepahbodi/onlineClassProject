@@ -1,0 +1,89 @@
+  /* SurveyPanel */
+
+  .form-popup {
+    display: block;
+    position: fixed;
+    top: 100px;
+    right: 40%;
+    z-index: 9;
+  }
+  
+  /* Add styles to the form container */
+  .form-container {
+    max-width: 300px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+  }
+  
+  /* Full-width input fields */
+  .form-container input[type=text]{
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #f1f1f1;
+  }
+
+  /* When the inputs get focus, do something */
+  .form-container input[type=text]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+
+  .remove-option {
+    display: flex;
+    justify-content: center;
+    margin: 5px 0 5px 0;
+  }
+
+  /* Set a style for the submit/login button */
+  .form-container .sumbit-btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    border-radius: 5px;
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+    transition: all ease-in-out 0.2s;
+  }
+
+  .form-container .add-btn ,.remove-btn {
+    color: white;
+    /* padding: 16px 10px; */
+    padding: 0 8px;
+    width: 30px;
+    height: 30px;
+    margin: 7px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-bottom:10px;
+    transition: all ease-in-out 0.2s;
+  }
+  
+  .form-container .add-btn {
+    background-color: green;
+  }
+
+  .add-btn:hover{
+    box-shadow: 0 0 9px green;
+  }
+  
+  .form-container .remove-btn {
+    background-color: red;
+  }
+
+  .remove-btn:hover {
+    box-shadow: 0 0 9px red;
+  }
+
+  .form-container .sumbit-btn:hover {
+    background-color: green;
+  }
